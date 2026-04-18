@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SGmine-PGA — What Separates Elite PGA Tour Players?</title>
+  <meta name="description" content="Data mining the ASA PGA Tour 2015–2022 corpus: Strokes Gained decomposition, player archetypes, and predictive models. By Edward Xiong." />
+  <meta name="author" content="Edward Xiong" />
+  <meta property="og:title" content="What Separates Elite PGA Tour Players?" />
+  <meta property="og:description" content="A data-mining study of Strokes Gained, player archetypes, and finish position in 333 tournaments (2015–2022)." />
+  <meta property="og:image" content="assets/fig4_archetypes.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <style>
+    :root {
+      --fg: #1a1d24;
+      --fg-muted: #525a69;
+      --bg: #fdfcf7;
+      --bg-soft: #f3efe4;
+      --accent: #1b5e3a;
+      --accent-2: #b22222;
+      --border: #d9d3c2;
+      --max: 1040px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--fg); }
+    body { font-family: "IBM Plex Sans", -apple-system, system-ui, sans-serif; line-height: 1.55; }
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 1.25rem; }
+    header {
+      background: linear-gradient(180deg, #0e3a22 0%, #1b5e3a 100%);
+      color: #fefaed; padding: 3.5rem 0 2.5rem 0;
+      border-bottom: 6px solid #c9b37a;
+    }
+    header h1 {
+      font-family: "IBM Plex Serif", Georgia, serif;
+      font-weight: 600; font-size: 2.4rem; margin: 0 0 0.5rem 0; line-height: 1.15;
+    }
+    header .tag {
+      display: inline-block; font-family: "JetBrains Mono", monospace;
+      font-size: 0.75rem; padding: 0.25rem 0.6rem; background: #fefaed22;
+      border: 1px solid #fefaed55; border-radius: 3px; margin-bottom: 0.75rem;
+      letter-spacing: 0.1em;
+    }
+    header .subtitle { font-size: 1.05rem; color: #fefaed; opacity: 0.85; margin: 0.5rem 0 0 0; max-width: 760px; }
+    header .byline { margin-top: 1.5rem; font-family: "IBM Plex Serif", serif; font-style: italic; opacity: 0.95; }
+    header .links { margin-top: 1.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    header .links a {
+      color: #fefaed; text-decoration: none; padding: 0.5rem 0.9rem;
+      border: 1px solid #fefaed88; border-radius: 3px; font-size: 0.88rem;
+      transition: background 0.15s;
+    }
+    header .links a:hover { background: #fefaed22; }
+    section { padding: 2.5rem 0 1.5rem 0; }
+    section h2 {
+      font-family: "IBM Plex Serif", serif; font-weight: 600;
+      font-size: 1.5rem; color: var(--accent);
+      border-bottom: 2px solid var(--border); padding-bottom: 0.4rem;
+      margin: 0 0 1.25rem 0;
+    }
+    section h3 { font-family: "IBM Plex Serif", serif; font-weight: 600; font-size: 1.15rem; margin: 1.25rem 0 0.5rem 0; }
+    p { margin: 0.5rem 0 1rem 0; }
+    code { font-family: "JetBrains Mono", monospace; font-size: 0.9em; background: var(--bg-soft); padding: 0.1em 0.35em; border-radius: 2px; }
+    pre {
+      background: #1a1d24; color: #fefaed; padding: 1rem 1.25rem; border-radius: 4px;
+      overflow-x: auto; font-size: 0.82rem; line-height: 1.5;
+    }
+    .callout {
+      background: var(--bg-soft); border-left: 4px solid var(--accent);
+      padding: 1rem 1.25rem; margin: 1.25rem 0; border-radius: 0 3px 3px 0;
+    }
+    .callout strong { color: var(--accent); }
+    table {
+      border-collapse: collapse; width: 100%; font-size: 0.9rem;
+      background: white; border: 1px solid var(--border); margin: 0.5rem 0 1.25rem 0;
+    }
+    th, td { padding: 0.5rem 0.65rem; text-align: left; border-bottom: 1px solid var(--border); }
+    th { background: var(--bg-soft); font-weight: 600; color: var(--fg); }
+    .num { text-align: right; font-variant-numeric: tabular-nums; }
+    figure { margin: 0 0 1.25rem 0; text-align: center; }
+    figure img { max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: 3px; box-shadow: 0 1px 6px #0001; }
+    figcaption { font-size: 0.85rem; color: var(--fg-muted); margin-top: 0.4rem; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    .stat-card {
+      background: white; border: 1px solid var(--border); border-radius: 3px;
+      padding: 0.9rem 1rem; text-align: center;
+    }
+    .stat-card .num-big { font-family: "IBM Plex Serif", serif; font-size: 1.9rem; color: var(--accent); font-weight: 600; }
+    .stat-card .label { font-size: 0.82rem; color: var(--fg-muted); }
+    .chart-wrap { background: white; padding: 1rem 1rem 0.5rem 1rem; border: 1px solid var(--border); border-radius: 3px; }
+    footer { background: var(--bg-soft); padding: 2rem 0; margin-top: 3rem; border-top: 1px solid var(--border); color: var(--fg-muted); font-size: 0.88rem; }
+    footer a { color: var(--accent); }
+    .bibitem { padding-left: 2em; text-indent: -2em; font-size: 0.88rem; color: var(--fg-muted); margin: 0.3rem 0; }
+    @media (max-width: 640px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      header h1 { font-size: 1.7rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <span class="tag">SGMINE-PGA · 2026</span>
+    <h1>What Separates Elite PGA Tour Players?</h1>
+    <p class="subtitle">A data-mining study of Strokes Gained, player archetypes, and finish position in 333 tournaments across the 2015&ndash;2022 PGA Tour seasons.</p>
+    <div class="byline">Edward Xiong &middot; 11-page research paper &middot; 7 figures &middot; open-source pipeline</div>
+    <div class="links">
+      <a href="https://github.com/edwardxiong2027/sgmine-pga/blob/main/paper/paper.pdf">Paper PDF</a>
+      <a href="https://github.com/edwardxiong2027/sgmine-pga">GitHub repo</a>
+      <a href="https://www.kaggle.com/datasets/robikscube/pga-tour-golf-data-20152022">Dataset (Kaggle)</a>
+      <a href="#citation">Cite this work</a>
+    </div>
+  </div>
+</header>
+
+<section id="tldr">
+  <div class="container">
+    <h2>TL;DR</h2>
+    <div class="callout">
+      <p>Across 29,180 player&ndash;event rows with complete Strokes Gained attribution, <strong>approach and putting each explain roughly 31&#37; of the unique variance in SG_total</strong>, and each carries a within-tournament standardised coefficient of <strong>&asymp; 0.60</strong> for predicting finish position &mdash; about 50&#37; larger than off-the-tee and around-the-green. Four player archetypes emerge from <em>k</em>-means on career SG profiles; the &ldquo;ball-striker&rdquo; archetype captures <strong>19 of the top 20</strong> players by career SG_total and 4.2&times; more wins per player than the balanced short-game cluster. A random forest on just four SG inputs predicts cut-making at <strong>ROC&ndash;AUC&nbsp;=&nbsp;0.894</strong> (5-fold CV) and finish position with <strong>MAE&nbsp;&approx;&nbsp;7.3&nbsp;places</strong>.</p>
+    </div>
+    <div class="grid-3" style="margin-top: 1.25rem;">
+      <div class="stat-card"><div class="num-big">36,864</div><div class="label">player&ndash;event rows</div></div>
+      <div class="stat-card"><div class="num-big">499</div><div class="label">unique players</div></div>
+      <div class="stat-card"><div class="num-big">333</div><div class="label">tournaments / 92 courses</div></div>
+      <div class="stat-card"><div class="num-big">0.894</div><div class="label">ROC&ndash;AUC, cut-making RF</div></div>
+      <div class="stat-card"><div class="num-big">R&sup2; = 0.55</div><div class="label">Finish-position ridge</div></div>
+      <div class="stat-card"><div class="num-big">d = 1.88</div><div class="label">Top-10&#37; vs bot-10&#37; SG-APP</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="data">
+  <div class="container">
+    <h2>The dataset</h2>
+    <p>The source is the <em>ASA All PGA Raw Data &ndash; Tournament Level</em> CSV distributed on Kaggle &mdash; one row per player&ndash;tournament, with Strokes Gained attribution on 79.2&#37; of rows, covering eight PGA Tour seasons. We coerce &ldquo;NA&rdquo; strings to missing, drop rows lacking complete SG attribution, and rank only the <em>cut-making</em> subset to avoid the systematic bias introduced when comparing <em>strokes</em> totals of cut-makers to cut-missers.</p>
+    <figure>
+      <img src="assets/fig1_sg_distributions.png" alt="Violin plots of the four SG components" />
+      <figcaption>Fig. 1 &mdash; Distribution of the four Strokes Gained components. Putting and approach show the widest dispersion.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="decomp">
+  <div class="container">
+    <h2>What drives SG_total?</h2>
+    <p>Leave-one-out unique-<em>R&sup2;</em> regression of <code>sg_total</code> on its four categorical components reveals a striking imbalance: <strong>approach (0.311) and putting (0.314) together account for more than 60&#37; of the explainable variance</strong>, while off-the-tee (0.162) and around-the-green (0.133) trail significantly behind. The finding is echoed in Pearson correlations with SG_total: <em>r<sub>APP</sub> = 0.617</em>, <em>r<sub>PUTT</sub> = 0.555</em>, <em>r<sub>OTT</sub> = 0.450</em>, <em>r<sub>ARG</sub> = 0.399</em>.</p>
+    <div class="grid-2">
+      <figure>
+        <img src="assets/fig2_variance_decomp.png" alt="Unique R^2 bar chart" />
+        <figcaption>Fig. 2 &mdash; Unique <em>R&sup2;</em> per SG component within SG_total.</figcaption>
+      </figure>
+      <figure>
+        <img src="assets/fig7_correlation_heatmap.png" alt="Correlation heatmap" />
+        <figcaption>Fig. 7 &mdash; Pearson correlations across SG components and outcomes.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="finish">
+  <div class="container">
+    <h2>Which skills separate elite from lagging finishers?</h2>
+    <p>Within-tournament standardised regressions (241 tournaments, minimum 30 cut-makers each) give near-identical standardised coefficients for approach and putting (<em>&beta;</em>* &asymp; 0.60), substantially larger than OTT (0.44) and ARG (0.41). The average within-tournament <em>R&sup2;</em> is <strong>0.88</strong>. Cohen&rsquo;s <em>d</em> between the top- and bottom-10&#37; finishers is a further 1.5&times; larger for approach than for around-the-green.</p>
+
+    <div class="chart-wrap" style="margin: 1rem 0 1.5rem 0;">
+      <canvas id="betaChart" height="150"></canvas>
+    </div>
+
+    <figure>
+      <img src="assets/fig3_finish_effect.png" alt="Cohen's d per SG component" />
+      <figcaption>Fig. 3 &mdash; Cohen&rsquo;s <em>d</em> between the top- and bottom-decile finishers across SG components.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="archetypes">
+  <div class="container">
+    <h2>Four player archetypes</h2>
+    <p>We aggregate 375 players with &ge;10 SG-recorded events to the player level, standardise their four-component career SG profile, and fit <em>k</em>-means with <em>k</em> = 4 (selected for interpretability; silhouette = 0.205). Four clusters emerge, each with a distinct signature:</p>
+    <table>
+      <thead>
+        <tr><th>Archetype</th><th class="num"><em>n</em></th><th class="num">SG_total</th><th class="num">Cut rate</th><th class="num">Wins / player</th><th>Signature</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>C0 &middot; Ball-strikers</td><td class="num">100</td><td class="num">+0.21</td><td class="num">0.68</td><td class="num">1.31</td><td>strong OTT + APP, weak PUTT</td></tr>
+        <tr><td>C1 &middot; Below-avg all-rounders</td><td class="num">102</td><td class="num">&minus;0.90</td><td class="num">0.46</td><td class="num">0.28</td><td>balanced but weak APP</td></tr>
+        <tr><td>C2 &middot; Short-game specialists</td><td class="num">138</td><td class="num">&minus;0.36</td><td class="num">0.57</td><td class="num">0.57</td><td>strong ARG + PUTT, weak OTT</td></tr>
+        <tr><td>C3 &middot; Marginal tour players</td><td class="num">35</td><td class="num">&minus;2.00</td><td class="num">0.29</td><td class="num">0.11</td><td>weak across the board</td></tr>
+      </tbody>
+    </table>
+    <p>The <strong>ball-striker archetype (C0)</strong> captures 19 of the top-20 players by career SG_total &mdash; Rahm, McIlroy, Cantlay, Johnson, Thomas, Morikawa, and so on &mdash; and drives <strong>4.2&times;</strong> more wins per player than the balanced short-game group. The two notable top-20 outliers are Jordan Spieth and Jason Day, classified into C2 because their SG profiles are putter- and wedge-led.</p>
+    <figure>
+      <img src="assets/fig4_archetypes.png" alt="UMAP scatter of player archetypes" />
+      <figcaption>Fig. 4 &mdash; UMAP embedding of 375 players with <em>k</em>-means cluster colouring.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="trends">
+  <div class="container">
+    <h2>Has the PGA Tour changed, 2015&ndash;2022?</h2>
+    <p>Winner SG_total per round is remarkably stationary at 3.38&ndash;3.80 strokes across eight seasons, and the within-tournament SG standard deviation hovers at 1.84&ndash;1.95 every year. The year-on-year variability in SG-component&ndash;finish correlations is almost entirely driven by the 2015&ndash;2016 coverage sparsity, not a true regime change.</p>
+    <figure>
+      <img src="assets/fig5_trends.png" alt="Temporal trends across 8 seasons" />
+      <figcaption>Fig. 5 &mdash; Per-season SG-component correlation with finish (left); winner mean SG_total and field dispersion (right).</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="models">
+  <div class="container">
+    <h2>Predictive models</h2>
+    <p>Two supervised models use only the four SG components as features, trained with 5-fold cross-validation (seed 42):</p>
+    <table>
+      <thead>
+        <tr><th>Task</th><th>Model</th><th class="num">Metric</th><th class="num">Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td rowspan="3">Made-cut classification</td><td>Always-yes baseline</td><td class="num">ROC&ndash;AUC</td><td class="num">0.500</td></tr>
+        <tr><td>Logistic (L2)</td><td class="num">ROC&ndash;AUC</td><td class="num">0.885</td></tr>
+        <tr><td>Random Forest (400 trees)</td><td class="num">ROC&ndash;AUC</td><td class="num"><strong>0.894</strong></td></tr>
+        <tr><td rowspan="2">Finish-position regression</td><td>Ridge (L2)</td><td class="num">R&sup2;</td><td class="num"><strong>0.545</strong></td></tr>
+        <tr><td>Random Forest</td><td class="num">MAE (places)</td><td class="num"><strong>7.33</strong></td></tr>
+      </tbody>
+    </table>
+    <p>Permutation importances from the cut-making RF corroborate the correlation story: <em>PUTT &gt; APP &gg; OTT &asymp; ARG</em>.</p>
+  </div>
+</section>
+
+<section id="top20">
+  <div class="container">
+    <h2>Top-20 players by career SG_total</h2>
+    <figure>
+      <img src="assets/fig6_top_players_radar.png" alt="Radar charts of top-20 player SG profiles" />
+      <figcaption>Fig. 6 &mdash; Career SG profile of the top-20 players, minimum 30 events.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="citation">
+  <div class="container">
+    <h2>Cite this work</h2>
+    <pre>@misc{xiong2026sgminepga,
+  title  = {What Separates Elite PGA Tour Players?
+            A Data-Mining Study of Strokes Gained, Player Archetypes,
+            and Finish Position in 333 Tournaments (2015--2022)},
+  author = {Xiong, Edward},
+  year   = {2026},
+  url    = {https://github.com/edwardxiong2027/sgmine-pga}
+}</pre>
+    <h3>Selected references</h3>
+    <p class="bibitem">Broadie, M. (2012). <em>Assessing Golfer Performance on the PGA Tour.</em> Interfaces 42(2), 146&ndash;165.</p>
+    <p class="bibitem">Broadie, M. (2014). <em>Every Shot Counts.</em> Gotham Books.</p>
+    <p class="bibitem">Fearing, D., Acimovic, J., &amp; Graves, S. C. (2011). <em>How to Catch a Tiger: Understanding Putting Performance on the PGA Tour.</em> Journal of Quantitative Analysis in Sports 7(1).</p>
+    <p class="bibitem">Hickman, D. C., &amp; Metz, N. E. (2019). <em>Driving Distance and the PGA Tour.</em> Journal of Sports Economics 20(8), 1032&ndash;1056.</p>
+    <p class="bibitem">McInnes, L., Healy, J., &amp; Melville, J. (2018). <em>UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction.</em> arXiv:1802.03426.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    &copy; 2026 Edward Xiong &middot; Paper + code released under MIT License &middot;
+    <a href="https://github.com/edwardxiong2027/sgmine-pga">github.com/edwardxiong2027/sgmine-pga</a>
+  </div>
+</footer>
+
+<script>
+  const ctx = document.getElementById('betaChart');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Off-the-Tee', 'Approach', 'Around-the-Green', 'Putting'],
+      datasets: [
+        {
+          label: 'Mean within-tournament \u03b2* (flipped)',
+          data: [0.439, 0.599, 0.406, 0.609],
+          backgroundColor: ['#1F77B4', '#D62728', '#2CA02C', '#9467BD'],
+          borderColor: '#000',
+          borderWidth: 1,
+        },
+        {
+          label: "Cohen's d (top-10% vs bot-10%)",
+          data: [1.36, 1.88, 1.02, 1.64],
+          backgroundColor: '#c9b37a',
+          borderColor: '#000',
+          borderWidth: 1,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        title: { display: true, text: 'Per-component predictive strength for finish position' },
+        tooltip: { mode: 'index', intersect: false }
+      },
+      scales: {
+        y: { beginAtZero: true, title: { display: true, text: 'coefficient / d' } }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
