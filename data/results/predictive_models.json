@@ -1,0 +1,52 @@
+{
+  "made_cut": {
+    "logistic": {
+      "cv_roc_auc": 0.8847326576968069,
+      "cv_accuracy": 0.7939684715558603,
+      "coefficients": {
+        "sg_ott": 0.8427813465206256,
+        "sg_app": 1.2104909332395306,
+        "sg_arg": 0.7787747022348668,
+        "sg_putt": 1.2946700071413357
+      },
+      "intercept": 0.4402815994070548
+    },
+    "random_forest": {
+      "cv_roc_auc": 0.8935619178332889,
+      "cv_accuracy": 0.8169636737491434,
+      "permutation_importance": {
+        "sg_ott": 0.0945512509586786,
+        "sg_app": 0.16435218868838825,
+        "sg_arg": 0.09422346775025783,
+        "sg_putt": 0.18653275228934088
+      }
+    },
+    "baseline_accuracy_always_1": 0.5842357779300891
+  },
+  "finish_position": {
+    "ridge": {
+      "cv_r2": 0.5448712611747812,
+      "cv_mae_positions": 8.30447452906203,
+      "coefficients": {
+        "sg_ott": -8.694121125975366,
+        "sg_app": -11.338178115016138,
+        "sg_arg": -7.605608629060284,
+        "sg_putt": -11.606450782809157
+      }
+    },
+    "random_forest": {
+      "cv_r2": 0.5206368548629153,
+      "cv_mae_positions": 7.332110536268151,
+      "permutation_importance": {
+        "sg_ott": 0.5421654343959419,
+        "sg_app": 0.6804842429107688,
+        "sg_arg": 0.40801457501452615,
+        "sg_putt": 0.6659195738610776
+      }
+    },
+    "baseline_mean_pos": 34.393346019274446
+  },
+  "sg_total_sanity": {
+    "cv_r2_total_from_components": 0.9858781700250218
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "k_selected": 4,
+  "silhouette_by_k": {
+    "2": 0.2315233672457954,
+    "3": 0.20319201875842147,
+    "4": 0.2050790460906309,
+    "5": 0.20013087370262364,
+    "6": 0.17747413076914953,
+    "7": 0.17073024192064634,
+    "8": 0.18736273033187292
+  },
+  "silhouette_selected": 0.2050790460906309,
+  "n_players": 375,
+  "clusters": [
+    {
+      "cluster_id": 0,
+      "label": "Above-avg (strong OTT, weak PUTT)",
+      "n_players": 100,
+      "mean_sg_total": 0.2050485245646449,
+      "mean_made_cut_rate": 0.6774757472024945,
+      "mean_wins_per_player": 1.31,
+      "mean_top10s_per_player": 14.17,
+      "centroid_raw_sg": {
+        "sg_ott": 0.22889503537313793,
+        "sg_app": 0.21262788398473925,
+        "sg_arg": -0.0007339392394785926,
+        "sg_putt": -0.2405517657853818
+      },
+      "exemplars_top5_closest": [
+        "Harold Varner III",
+        "Kevin Streelman",
+        "Aaron Wise",
+        "Francesco Molinari",
+        "Ryan Moore"
+      ]
+    },
+    {
+      "cluster_id": 1,
+      "label": "Balanced (strong OTT, weak APP)",
+      "n_players": 102,
+      "mean_sg_total": -0.8957810155372997,
+      "mean_made_cut_rate": 0.46221440356158694,
+      "mean_wins_per_player": 0.28431372549019607,
+      "mean_top10s_per_player": 2.950980392156863,
+      "centroid_raw_sg": {
+        "sg_ott": -0.0028693878487278945,
+        "sg_app": -0.31414702492012975,
+        "sg_arg": -0.2997066650543625,
+        "sg_putt": -0.28589985102448023
+      },
+      "exemplars_top5_closest": [
+        "Michael Gligic",
+        "Andrew Landry",
+        "Jim Knous",
+        "Scott Brown",
+        "Sam Saunders"
+      ]
+    },
+    {
+      "cluster_id": 2,
+      "label": "Balanced (strong ARG, weak OTT)",
+      "n_players": 138,
+      "mean_sg_total": -0.36003287799487504,
+      "mean_made_cut_rate": 0.5688425768738788,
+      "mean_wins_per_player": 0.5652173913043478,
+      "mean_top10s_per_player": 7.4855072463768115,
+      "centroid_raw_sg": {
+        "sg_ott": -0.2293883001075625,
+        "sg_app": -0.19649815643504537,
+        "sg_arg": 0.053554739773263846,
+        "sg_putt": 0.005814691000032207
+      },
+      "exemplars_top5_closest": [
+        "Peter Uihlein",
+        "Michael Thompson",
+        "Mark Hubbard",
+        "Nate Lashley",
+        "Zac Blair"
+      ]
+    },
+    {
+      "cluster_id": 3,
+      "label": "Below-avg (strong ARG, weak APP)",
+      "n_players": 35,
+      "mean_sg_total": -2.000528820473189,
+      "mean_made_cut_rate": 0.28697334905027533,
+      "mean_wins_per_player": 0.11428571428571428,
+      "mean_top10s_per_player": 0.6285714285714286,
+      "centroid_raw_sg": {
+        "sg_ott": -0.6380380621567046,
+        "sg_app": -0.8668165884459711,
+        "sg_arg": -0.18522847236593187,
+        "sg_putt": -0.3142697058409384
+      },
+      "exemplars_top5_closest": [
+        "Shaun Micheel",
+        "Tim Herron",
+        "Bo Van Pelt",
+        "Nelson Ledesma",
+        "Daniel Chopra"
+      ]
+    }
+  ],
+  "min_events_threshold": 10
+}

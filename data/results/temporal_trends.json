@@ -1,0 +1,370 @@
+{
+  "per_season_field_spread": {
+    "2015": {
+      "mean_within_tourn_sg_std": 1.902150832932001,
+      "sd_within_tourn_sg_std": 0.32411298736807437,
+      "n_tournaments": 26
+    },
+    "2016": {
+      "mean_within_tourn_sg_std": 1.891628195477401,
+      "sd_within_tourn_sg_std": 0.27339479617800144,
+      "n_tournaments": 27
+    },
+    "2017": {
+      "mean_within_tourn_sg_std": 1.9506116316700686,
+      "sd_within_tourn_sg_std": 0.231322102822248,
+      "n_tournaments": 31
+    },
+    "2018": {
+      "mean_within_tourn_sg_std": 1.9014217604618684,
+      "sd_within_tourn_sg_std": 0.2592971617227412,
+      "n_tournaments": 34
+    },
+    "2019": {
+      "mean_within_tourn_sg_std": 1.9131957191597893,
+      "sd_within_tourn_sg_std": 0.3016978279094173,
+      "n_tournaments": 35
+    },
+    "2020": {
+      "mean_within_tourn_sg_std": 1.9340060040190932,
+      "sd_within_tourn_sg_std": 0.3136328882713304,
+      "n_tournaments": 29
+    },
+    "2021": {
+      "mean_within_tourn_sg_std": 1.911527845873897,
+      "sd_within_tourn_sg_std": 0.469914833939862,
+      "n_tournaments": 39
+    },
+    "2022": {
+      "mean_within_tourn_sg_std": 1.8405173579315117,
+      "sd_within_tourn_sg_std": 0.18920547732161447,
+      "n_tournaments": 26
+    }
+  },
+  "per_season_winner_sg": {
+    "2015": {
+      "sg_ott_mean": 0.7030769230769232,
+      "sg_ott_median": 0.71,
+      "sg_app_mean": 1.2488461538461537,
+      "sg_app_median": 1.335,
+      "sg_arg_mean": 0.3426923076923077,
+      "sg_arg_median": 0.33499999999999996,
+      "sg_putt_mean": 1.389230769230769,
+      "sg_putt_median": 1.22,
+      "sg_total_mean": 3.686923076923077,
+      "sg_total_median": 3.565
+    },
+    "2016": {
+      "sg_ott_mean": 0.705,
+      "sg_ott_median": 0.665,
+      "sg_app_mean": 1.3734615384615385,
+      "sg_app_median": 1.18,
+      "sg_arg_mean": 0.38576923076923075,
+      "sg_arg_median": 0.355,
+      "sg_putt_mean": 0.9103846153846155,
+      "sg_putt_median": 0.96,
+      "sg_total_mean": 3.376153846153846,
+      "sg_total_median": 3.33
+    },
+    "2017": {
+      "sg_ott_mean": 0.6725806451612903,
+      "sg_ott_median": 0.71,
+      "sg_app_mean": 1.3048387096774194,
+      "sg_app_median": 1.28,
+      "sg_arg_mean": 0.5206451612903226,
+      "sg_arg_median": 0.29,
+      "sg_putt_mean": 1.1348387096774193,
+      "sg_putt_median": 0.94,
+      "sg_total_mean": 3.633870967741936,
+      "sg_total_median": 3.58
+    },
+    "2018": {
+      "sg_ott_mean": 0.7420588235294118,
+      "sg_ott_median": 0.76,
+      "sg_app_mean": 1.3188235294117645,
+      "sg_app_median": 1.385,
+      "sg_arg_mean": 0.41441176470588237,
+      "sg_arg_median": 0.36,
+      "sg_putt_mean": 1.2094117647058822,
+      "sg_putt_median": 1.0350000000000001,
+      "sg_total_mean": 3.6852941176470586,
+      "sg_total_median": 3.675
+    },
+    "2019": {
+      "sg_ott_mean": 0.7822857142857143,
+      "sg_ott_median": 0.72,
+      "sg_app_mean": 1.3737142857142857,
+      "sg_app_median": 1.35,
+      "sg_arg_mean": 0.33057142857142857,
+      "sg_arg_median": 0.37,
+      "sg_putt_mean": 1.31,
+      "sg_putt_median": 1.34,
+      "sg_total_mean": 3.7957142857142854,
+      "sg_total_median": 3.76
+    },
+    "2020": {
+      "sg_ott_mean": 0.5682758620689655,
+      "sg_ott_median": 0.56,
+      "sg_app_mean": 1.256896551724138,
+      "sg_app_median": 1.42,
+      "sg_arg_mean": 0.32034482758620686,
+      "sg_arg_median": 0.35,
+      "sg_putt_mean": 1.4248275862068966,
+      "sg_putt_median": 1.46,
+      "sg_total_mean": 3.5689655172413794,
+      "sg_total_median": 3.4
+    },
+    "2021": {
+      "sg_ott_mean": 0.6244444444444445,
+      "sg_ott_median": 0.57,
+      "sg_app_mean": 1.2458333333333333,
+      "sg_app_median": 1.255,
+      "sg_arg_mean": 0.5302777777777777,
+      "sg_arg_median": 0.565,
+      "sg_putt_mean": 1.1188888888888888,
+      "sg_putt_median": 0.99,
+      "sg_total_mean": 3.5225,
+      "sg_total_median": 3.565
+    },
+    "2022": {
+      "sg_ott_mean": 0.6224000000000001,
+      "sg_ott_median": 0.66,
+      "sg_app_mean": 1.2908000000000002,
+      "sg_app_median": 1.31,
+      "sg_arg_mean": 0.5136,
+      "sg_arg_median": 0.6,
+      "sg_putt_mean": 1.3532,
+      "sg_putt_median": 1.29,
+      "sg_total_mean": 3.6068000000000002,
+      "sg_total_median": 3.58
+    }
+  },
+  "per_season_component_vs_pos": {
+    "2015": {
+      "sg_ott": {
+        "pearson_r_with_pos": -0.2703443235821282,
+        "p": 1.980134708345507e-28
+      },
+      "sg_app": {
+        "pearson_r_with_pos": -0.30736641729248126,
+        "p": 1.1751485426949398e-36
+      },
+      "sg_arg": {
+        "pearson_r_with_pos": -0.16188682783543218,
+        "p": 6.07425947952954e-11
+      },
+      "sg_putt": {
+        "pearson_r_with_pos": -0.2660667447583819,
+        "p": 1.4755367369541454e-27
+      },
+      "sg_t2g": {
+        "pearson_r_with_pos": -0.42764226984339326,
+        "p": 9.315321382793828e-73
+      }
+    },
+    "2016": {
+      "sg_ott": {
+        "pearson_r_with_pos": -0.18869746731280235,
+        "p": 1.890052187656833e-15
+      },
+      "sg_app": {
+        "pearson_r_with_pos": -0.22826315772910452,
+        "p": 4.626920141340045e-22
+      },
+      "sg_arg": {
+        "pearson_r_with_pos": -0.18501756076669063,
+        "p": 6.6697493883256736e-15
+      },
+      "sg_putt": {
+        "pearson_r_with_pos": -0.17734719469260646,
+        "p": 8.503985406304239e-14
+      },
+      "sg_t2g": {
+        "pearson_r_with_pos": -0.34788049489664613,
+        "p": 8.228892356472468e-51
+      }
+    },
+    "2017": {
+      "sg_ott": {
+        "pearson_r_with_pos": -0.30242497648781497,
+        "p": 4.387423994573265e-46
+      },
+      "sg_app": {
+        "pearson_r_with_pos": -0.38383104484847963,
+        "p": 2.252582221449227e-75
+      },
+      "sg_arg": {
+        "pearson_r_with_pos": -0.1725998428882931,
+        "p": 1.2188305107968026e-15
+      },
+      "sg_putt": {
+        "pearson_r_with_pos": -0.33999904367451605,
+        "p": 1.611543846478221e-58
+      },
+      "sg_t2g": {
+        "pearson_r_with_pos": -0.517404135947255,
+        "p": 1.6819113642624285e-145
+      }
+    },
+    "2018": {
+      "sg_ott": {
+        "pearson_r_with_pos": -0.34917986571915066,
+        "p": 3.457722131546308e-67
+      },
+      "sg_app": {
+        "pearson_r_with_pos": -0.504423576192491,
+        "p": 2.652103492334751e-149
+      },
+      "sg_arg": {
+        "pearson_r_with_pos": -0.30197841147305815,
+        "p": 6.866357359972396e-50
+      },
+      "sg_putt": {
+        "pearson_r_with_pos": -0.42386634100746357,
+        "p": 2.4132501486029428e-101
+      },
+      "sg_t2g": {
+        "pearson_r_with_pos": -0.6899056772895403,
+        "p": 0.0
+      }
+    },
+    "2019": {
+      "sg_ott": {
+        "pearson_r_with_pos": -0.3532473688695982,
+        "p": 1.2156183370388273e-71
+      },
+      "sg_app": {
+        "pearson_r_with_pos": -0.45943354172487894,
+        "p": 6.063190083281817e-126
+      },
+      "sg_arg": {
+        "pearson_r_with_pos": -0.2919165083003464,
+        "p": 1.7766045254330222e-48
+      },
+      "sg_putt": {
+        "pearson_r_with_pos": -0.45929285204405157,
+        "p": 7.385055788052711e-126
+      },
+      "sg_t2g": {
+        "pearson_r_with_pos": -0.6617519617196996,
+        "p": 4.486296925765536e-303
+      }
+    },
+    "2020": {
+      "sg_ott": {
+        "pearson_r_with_pos": -0.3816362462296755,
+        "p": 2.1622040590997123e-69
+      },
+      "sg_app": {
+        "pearson_r_with_pos": -0.48901681757712956,
+        "p": 4.4796765598480853e-119
+      },
+      "sg_arg": {
+        "pearson_r_with_pos": -0.2755767145006276,
+        "p": 1.0599104317254205e-35
+      },
+      "sg_putt": {
+        "pearson_r_with_pos": -0.4653266176267007,
+        "p": 1.5803688196873762e-106
+      },
+      "sg_t2g": {
+        "pearson_r_with_pos": -0.6765864696786384,
+        "p": 3.9395626940965183e-264
+      }
+    },
+    "2021": {
+      "sg_ott": {
+        "pearson_r_with_pos": -0.37951074115712446,
+        "p": 1.5648738289142016e-84
+      },
+      "sg_app": {
+        "pearson_r_with_pos": -0.4949266918146429,
+        "p": 3.8078063394689e-151
+      },
+      "sg_arg": {
+        "pearson_r_with_pos": -0.30617249339824476,
+        "p": 3.52019740101015e-54
+      },
+      "sg_putt": {
+        "pearson_r_with_pos": -0.4575563311558795,
+        "p": 1.0754238863581967e-126
+      },
+      "sg_t2g": {
+        "pearson_r_with_pos": -0.6907808977496894,
+        "p": 0.0
+      }
+    },
+    "2022": {
+      "sg_ott": {
+        "pearson_r_with_pos": -0.37944981424527024,
+        "p": 9.865276716789462e-59
+      },
+      "sg_app": {
+        "pearson_r_with_pos": -0.4788877404922661,
+        "p": 3.7668902310610665e-97
+      },
+      "sg_arg": {
+        "pearson_r_with_pos": -0.3152529691518166,
+        "p": 3.993827827508283e-40
+      },
+      "sg_putt": {
+        "pearson_r_with_pos": -0.41425790212872965,
+        "p": 9.730975845379763e-71
+      },
+      "sg_t2g": {
+        "pearson_r_with_pos": -0.6913032981682581,
+        "p": 2.3024919080243698e-239
+      }
+    }
+  },
+  "per_season_cut_profile": {
+    "2015": {
+      "made_cut_median_sg_total": 0.83,
+      "missed_cut_median_sg_total": -1.29,
+      "n_made": 1640,
+      "n_missed": 1059
+    },
+    "2016": {
+      "made_cut_median_sg_total": 0.84,
+      "missed_cut_median_sg_total": -1.35,
+      "n_made": 1750,
+      "n_missed": 1208
+    },
+    "2017": {
+      "made_cut_median_sg_total": 0.85,
+      "missed_cut_median_sg_total": -1.5,
+      "n_made": 2116,
+      "n_missed": 1488
+    },
+    "2018": {
+      "made_cut_median_sg_total": 0.75,
+      "missed_cut_median_sg_total": -1.4,
+      "n_made": 2394,
+      "n_missed": 1574
+    },
+    "2019": {
+      "made_cut_median_sg_total": 0.75,
+      "missed_cut_median_sg_total": -1.415,
+      "n_made": 2567,
+      "n_missed": 1810
+    },
+    "2020": {
+      "made_cut_median_sg_total": 0.69,
+      "missed_cut_median_sg_total": -1.31,
+      "n_made": 2134,
+      "n_missed": 1570
+    },
+    "2021": {
+      "made_cut_median_sg_total": 0.8,
+      "missed_cut_median_sg_total": -1.32,
+      "n_made": 2614,
+      "n_missed": 2148
+    },
+    "2022": {
+      "made_cut_median_sg_total": 0.74,
+      "missed_cut_median_sg_total": -1.33,
+      "n_made": 1833,
+      "n_missed": 1275
+    }
+  }
+}
