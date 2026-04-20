@@ -24,61 +24,64 @@
   linkcolor=blue!55!black,
   citecolor=blue!55!black,
   urlcolor=blue!55!black,
-  pdftitle={What Separates Elite PGA Tour Players?},
+  pdftitle={Within-Tour Determinants of PGA Tour Finish Position},
   pdfauthor={Edward Xiong}
 }
 
-\title{\textbf{What Separates Elite PGA Tour Players?\\
-\large A Data-Mining Study of Strokes Gained, Player Archetypes, and Finish Position in 333 Tournaments (2015--2022)}}
+\title{\textbf{Within-Tour Determinants of Finish Position on the PGA Tour, 2015--2022:\\
+\large Dominance Analysis of Strokes Gained, Honest Archetype Clustering, and Leakage-Aware Predictive Models}}
 
-\author{Edward Xiong\thanks{\url{https://edwardxiong2027.github.io/sgmine-pga/}. Code and data: \url{https://github.com/edwardxiong2027/sgmine-pga}.}}
+\author{Edward Xiong\thanks{\url{https://edwardxiong2027.github.io/sgmine-pga/}. Code, data, and reproducibility artefacts: \url{https://github.com/edwardxiong2027/sgmine-pga}. The author thanks the anonymous peer reviewer whose comments shaped this revision (v2).}}
 
-\date{April 2026}
+\date{}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-We data-mine the Advanced Sports Analytics (ASA) player--tournament-level PGA Tour corpus distributed on Kaggle, covering 36{,}864 player-events across 333 tournaments, 92 courses, and 499 unique golfers between the 2015 and 2022 seasons. After restricting to rows with complete Strokes Gained (SG) attribution ($n=29{,}180$; 79.2\% of the corpus), we (i)~decompose the variance of \texttt{sg\_total} into its four component categories (off-the-tee, approach, around-the-green, putting), (ii)~rank each component's predictive value for finish position and cut-making, (iii)~cluster 375 regular tour players into four interpretable SG archetypes via $k$-means over the $(OTT, APP, ARG, PUTT)$ profile, (iv)~quantify temporal trends across eight seasons, and (v)~fit out-of-sample predictive models for making the cut and for final finish. Three findings stand out. First, approach-play (APP) and putting (PUTT) each explain $\sim\!31\%$ of the unique variance in SG\_total and each has the largest standardised coefficient when regressing finish position within a tournament ($\bar\beta^{*}_{APP}=0.60,\;\bar\beta^{*}_{PUTT}=0.61$). Off-the-tee is less than half as important in standardised terms and around-the-green is smallest. Second, the Cohen's $d$ effect size between the top-10\% and bottom-10\% of finishers is $d=1.88$ for APP, $d=1.64$ for PUTT, $d=1.36$ for OTT, and only $d=1.02$ for ARG, implying that the stroke-play margin at elite level is disproportionately made on approach shots. Third, of our four discovered archetypes, the ``Above-average Ball-Strikers'' ($n=100$) --- strong OTT and APP but slightly below-average PUTT --- account for \emph{all but one} of the top-20 players by career SG\_total and 4.2$\times$ more wins per player than the Balanced Short-Game cluster. A random-forest classifier using only the four SG inputs attains 5-fold CV ROC--AUC of $0.894$ for cut-making, and a ridge regression attains $R^2=0.545$ for finish position with a mean absolute error of $\sim\!7.3$ positions. We release our full data-mining pipeline, figures, and interactive demo site.
+We data-mine the Advanced Sports Analytics player--tournament PGA Tour corpus distributed on Kaggle, covering 36{,}864 player--events in 333 tournaments between 2015 and 2022 ($n = 29{,}180$ with complete 4-component Strokes Gained [SG] attribution).  The study is explicitly \emph{within-tour} and \emph{descriptive-inferential} rather than \emph{elite-vs-amateur}: every player in the sample is already at the top of global golf, so we characterise which SG skills most separate the best of this elite from its median.  We (i)~distinguish the arithmetic \emph{identity} that Var$(\text{SG\_total})$ decomposes into Var$(\text{OTT})$\,+\,Var$(\text{APP})$\,+\,Var$(\text{ARG})$\,+\,Var$(\text{PUTT})$\,+\,covariances from the \emph{importance} question, ``which component contributes most to finish position?'', for which we report Lindeman/Merenda/Gold (LMG) dominance analysis --- a Shapley-value attribution of $R^2$; (ii)~complement the LMG importance numbers with 500-bootstrap-CI Cohen's $d$, Fitzsimons' continuous-$r$ back-transform, and reliability-based attenuation-corrected within-tournament standardised betas with VIFs; (iii)~show that the v1 four-archetype $k$-means solution does not exceed a matched-covariance Gaussian null on silhouette, and that the v1 claim ``19 of the top-20 players fall in one ball-striker cluster'' collapses from a 90\% concentration in an absolute-scope clustering (which re-states the SG\_total ranking because the components sum to the total) to 45\% in a residual-scope clustering that removes each player's level; (iv)~re-evaluate predictive models under a cross-validation grid (random 5-fold, GroupKFold by tournament, GroupKFold by player, out-of-time 2021--22), separate the same-tournament ``sanity-check'' cut classifier from a genuine trailing-SG classifier (AUC 0.89 vs.\ 0.63), and report Spearman rank scores for the finish regressor; (v)~formally test stationarity of within-tournament scoring dispersion and winner SG across seasons via tournament-level fixed-effects OLS with HC0 robust SEs and a 2018 Chow break test.  LMG attributes 34.0\% [32.8, 35.3] of finish-position $R^2$ to approach, 31.7\% [30.1, 33.2] to putting, 20.4\% [18.9, 22.0] to off-the-tee, and 13.9\% [12.0, 15.2] to around-the-green; attenuation correction shifts within-tournament betas by less than 4\%.  Neither scoring dispersion nor winner SG exhibits a detectable linear trend or 2018 structural break.  All code, data links, and v2 artefacts are released at \url{https://github.com/edwardxiong2027/sgmine-pga}.
 \end{abstract}
 
-\noindent\textbf{Keywords:} golf analytics, Strokes Gained, data mining, $k$-means, UMAP, random forest, PGA Tour.
+\noindent\textbf{Keywords:} golf analytics, Strokes Gained, data mining, dominance analysis, LMG, cluster stability, GroupKFold, Chow test, PGA Tour.
 
 \section{Introduction}
 
-Modern golf analytics is dominated by the Strokes Gained (SG) framework introduced by \citet{broadie2012assessing,broadie2014every}. By benchmarking every shot against the field-average expectation from the same starting lie, distance-to-hole, and surface type, SG converts raw scoring into four category buckets --- \emph{off-the-tee} (OTT), \emph{approach} (APP), \emph{around-the-green} (ARG), and \emph{putting} (PUTT) --- whose sum defines \emph{SG\_total}, the per-round advantage of a player over the weekly field. Since its 2011 adoption by the PGA Tour \citep{broadie2008pga}, SG has become the lingua franca of tournament analysis.
+Modern professional golf analytics is dominated by the Strokes Gained (SG) framework introduced by \citet{broadie2012assessing,broadie2014every}.  By benchmarking every shot against the field-average expectation from the same starting lie, distance-to-hole, and surface type, SG decomposes raw scoring into four shot-type buckets --- \emph{off-the-tee} (OTT), \emph{approach} (APP), \emph{around-the-green} (ARG), and \emph{putting} (PUTT) --- whose sum is \emph{SG\_total}, the per-round advantage of a player over the weekly field.  Since its 2011 adoption by the PGA Tour \citep{broadie2008pga}, SG has become the lingua franca of tournament analysis.
 
-Despite a growing body of work on individual SG components \citep{fearing2011golf,hickman2019driving,lonzani2014strokes}, relatively few studies have performed a \emph{systematic, unsupervised mining} of the multi-season player--tournament corpus now freely available to researchers. The present paper addresses this gap by data-mining the publicly distributed ASA corpus \citep{kaggle_asa_pga,asa_pga_source}. We do \emph{not} attempt to train a beat-the-market betting model; instead we treat the dataset as a scientific object to be profiled, decomposed, clustered, and modelled with reproducible open-source tooling. Our contributions are fivefold:
+Despite a large body of work on individual SG components \citep{fearing2011golf,hickman2019driving,lonzani2014strokes}, three methodological gaps persist when SG data are analysed at scale.  First, the ``variance decomposition of SG\_total'' reported in several recent analyses is an arithmetic identity: because SG\_total is \emph{defined} as the sum of its four components, any such decomposition attributes variance to components without ever reaching the real question of interest, namely \emph{which component contributes most to winning}?  Second, most archetype clusterings of the SG profile implicitly include the SG\_total level dimension, so the cluster with the highest centroid on the sum contains the top players by construction --- a form of analytic circularity.  Third, predictive models that use same-tournament SG to predict made-cut or finish position reproduce the definition of those outcomes up to noise; near-unity accuracy does not establish predictive skill.
+
+The present paper (v2) was rewritten in response to a peer-review round that flagged each of the above.  We retain the primary descriptive aim of the v1 analysis --- profiling within-tour determinants of PGA Tour finish position --- but replace every analysis that conflated identity with importance, or sample-level with out-of-sample evaluation, with a methodologically honest counterpart.  Our contributions are:
 
 \begin{enumerate}[leftmargin=2em,itemsep=0pt]
-\item A quality-controlled descriptive profile of 36{,}864 PGA Tour player-events in 2015--2022, documenting SG coverage, cut-making rates, and purse distribution (Section~\ref{sec:data}).
-\item A variance-decomposition of SG\_total into its four components via unique-$R^2$ leave-one-out regression (Section~\ref{sec:decomp}).
-\item A within-tournament standardised-coefficient analysis showing that, after controlling for field and course, the \emph{approach} and \emph{putting} components carry roughly equal ($\approx\!50\%$ larger) weight than off-the-tee in explaining finish position (Section~\ref{sec:finish}).
-\item A $k$-means/UMAP clustering on career SG profiles that yields four interpretable player archetypes (silhouette = 0.205; $k=4$ chosen for interpretability), with the top-heavy ``ball-striker'' cluster capturing almost every major winner of the period (Section~\ref{sec:arch}).
-\item Out-of-sample predictive models for cut-making (Random Forest, 5-fold CV ROC--AUC = 0.894) and finish position (Ridge, CV $R^2 = 0.545$; MAE $\approx\!7.3$ positions), together with permutation-importance rankings (Section~\ref{sec:models}).
+\item A quality-controlled descriptive profile of 36{,}864 player-events in 2015--2022 (Section~\ref{sec:data}).
+\item A \emph{clear separation} of (a)~the arithmetic identity $\mathrm{Var}(\text{SG\_total}) = \sum \mathrm{Var}(\text{SG}_c) + \text{covariances}$ from (b)~LMG \citep{lindeman1980lmg,gromping2007lmg,shapley1953value} dominance analysis of the components on finish position.  The latter is the quantity of real interest; we report 200-bootstrap 95\% CIs (Section~\ref{sec:decomp}).
+\item 500-bootstrap Cohen's $d$ top-vs-bottom-decile with its Fitzsimons \citep{fitzsimons2008death} continuous-$r$ back-transform and a paired full-sample Pearson $r$ \emph{companion}; attenuation-corrected within-tournament standardised betas with VIFs (Section~\ref{sec:finish}).  The corrections shift the rank-ordering minimally, but the quantities reported now have the right interpretation.
+\item A sanity-checked archetype analysis: (a)~silhouette at every $k$ is benchmarked against a matched-covariance Gaussian null (99 permutations); (b)~clustering is performed \emph{both} on the absolute SG profile (v1-equivalent) and on the per-player residual profile (level removed); (c)~cluster stability is estimated on 200 bootstrap replicates with Hungarian label matching; (d)~the v1 ``19-of-20 in one cluster'' claim is restated as a falsifiable concentration test (Section~\ref{sec:arch}).
+\item Predictive models re-evaluated on a 4-point CV grid (random 5-fold, GroupKFold by tournament, GroupKFold by player, out-of-time 2021--22); the same-tournament cut classifier is relabelled as a sanity check and paired with a genuine trailing-SG model; the finish regressor reports Spearman rank scores alongside $R^2$ (Section~\ref{sec:models}).
+\item Formal stationarity: linear-trend tests on annual series, tournament-level OLS with season fixed effects and HC0 robust SEs \citep{white1980robust}, and a Chow \citep{chow1960tests} structural-break test at the 2018 boundary (Section~\ref{sec:trend}).
 \end{enumerate}
 
-All code, figures, and the interactive demonstration site are released at \url{https://github.com/edwardxiong2027/sgmine-pga}.
+\paragraph{Scope clarification.}  The word \emph{elite} in the v1 title was ambiguous: every player in the ASA sample is already at the top of global golf.  The contrast we actually study is \emph{within-tour}: what separates the best of this elite from its median.  The present title reflects that scope explicitly.
 
 \section{Related Work}
 \label{sec:related}
 
-The statistical study of PGA Tour performance dates at least to \citet{connolly2008skill}, who fit mixed-effects models to separate skill from luck in tournament scoring, concluding that roughly 85\% of the between-player variance in 18-hole scores is attributable to persistent skill. \citet{broadie2008pga,broadie2012assessing,broadie2014every} subsequently introduced Strokes Gained, transforming golf performance measurement by anchoring every shot to a data-driven benchmark rather than to raw counting stats such as fairways hit or greens in regulation. \citet{fearing2011golf} used the same framework to demonstrate that putting accounts for roughly 15\% of scoring variance and that the ``short-game versus long-game'' dichotomy exaggerated by earlier coaching literature does not survive variance decomposition.
+The statistical study of PGA Tour performance dates at least to \citet{connolly2008skill}, who fit mixed-effects models separating skill from luck in tournament scoring and concluded that roughly 85\% of the between-player variance in 18-hole scores is attributable to persistent skill.  \citet{broadie2008pga,broadie2012assessing,broadie2014every} subsequently introduced Strokes Gained, anchoring every shot to a data-driven benchmark rather than to counting statistics such as fairways hit or greens in regulation.  \citet{fearing2011golf} used the same framework to show that putting accounts for roughly 15\% of scoring \emph{variance} --- specifically addressing the importance question on an outcome, which is the analogue of our LMG analysis --- and that the ``short-game versus long-game'' dichotomy exaggerated by earlier coaching literature does not survive an honest variance decomposition.  Our Section~\ref{sec:decomp} follows \citet{fearing2011golf} in separating identity from importance.
 
-More recent work has probed individual components. \citet{hickman2019driving} document that increases in driving distance are associated with both lower scoring and reduced accuracy, but that the scoring benefit survives after controlling for accuracy. \citet{baugher2016statistical} and \citet{lonzani2014strokes} use component-level SG to model season-long money list finishes. Machine-learning approaches have appeared more recently: \citet{kim2024random} fit random forests to tournament outcomes, finding comparable out-of-sample $R^2$ to ours. On competitive-balance and incentive design, \citet{spears2018scoring} track scoring dispersion and \citet{brown2011quitters} study ``superstar effects.'' \citet{alexander2004price} relates purse structure to effort.
+More recent work has probed individual components.  \citet{hickman2019driving} document that increases in driving distance are associated with both lower scoring and reduced accuracy, but that the scoring benefit survives controlling for accuracy.  \citet{baugher2016statistical} and \citet{lonzani2014strokes} use component-level SG to model season-long money list finishes.  Machine-learning approaches have appeared more recently: \citet{kim2024random} fit random forests to tournament outcomes, finding comparable out-of-sample $R^2$ to ours.  On competitive-balance and incentive design, \citet{spears2018scoring} track scoring dispersion and \citet{brown2011quitters} study ``superstar effects''; \citet{alexander2014price} relates purse structure to effort.
 
-Our contribution extends this literature in three directions. First, we apply \emph{unsupervised} methods (UMAP \citep{mcinnes2018umap} and $k$-means \citep{hartigan1979algorithm}) to discover player archetypes from the 4-dimensional SG profile rather than from ad hoc statistics. Second, we quantify within-tournament standardised regression coefficients that are directly comparable across SG components. Third, we adopt a Cohen's $d$ \citep{cohen1988statistical} effect-size framing for the top-vs-bottom-decile comparison so that the magnitudes of component-level differences are immediately interpretable.
+Our methodological contribution extends this literature in four directions.  First, we apply LMG dominance analysis \citep{lindeman1980lmg,gromping2007lmg,shapley1953value} rather than an identity decomposition.  Second, we report 500-bootstrap CIs and a Fitzsimons \citep{fitzsimons2008death} continuous-$r$ back-transform for the extreme-groups Cohen's $d$, so that the reported effect sizes are not inflated by dichotomisation \citep{hunter1990methods}.  Third, we benchmark every silhouette against a Gaussian null and check cluster-level claims against both absolute-scope and residual-scope clusterings, closing the circularity gap.  Fourth, we evaluate predictive models under GroupKFold (tournament, player) and out-of-time CV rather than random 5-fold alone; the difference between schemes is diagnostic of the feature--label relationship.
 
 \section{Data}
 \label{sec:data}
 
 \subsection{Source and schema}
 
-The data come from Advanced Sports Analytics \citep{asa_pga_source} and are distributed on Kaggle \citep{kaggle_asa_pga}. The file \texttt{ASA All PGA Raw Data -- Tourn Level.csv} contains one row per player--tournament, with columns for the player (both an initialised name and a full name), the tournament (id, name, course, date, purse, season, no-cut indicator), the round-level outcomes (strokes, par, rounds played, made-cut flag, finish position \texttt{pos}, textual \texttt{Finish}), three sets of fantasy-points columns (\texttt{DKP/FDP/SDP} for DraftKings, FanDuel, and SuperDraft, each further broken down into hole, streak, finish, and total buckets), and the six Strokes Gained fields (\texttt{sg\_putt}, \texttt{sg\_arg}, \texttt{sg\_app}, \texttt{sg\_ott}, \texttt{sg\_t2g}, \texttt{sg\_total}). Dates span 12 October 2014 through 5 June 2022.
+The data come from Advanced Sports Analytics \citep{asa_pga_source} and are distributed on Kaggle \citep{kaggle_asa_pga}.  The file \texttt{ASA All PGA Raw Data -- Tourn Level.csv} contains one row per player--tournament, with columns for the player (initialised and full name), the tournament (id, name, course, date, purse, season, no-cut indicator), the round-level outcomes (strokes, par, rounds played, made-cut flag, finish position \texttt{pos}), three sets of fantasy-points columns (\texttt{DKP/FDP/SDP}), and six Strokes Gained fields (\texttt{sg\_putt}, \texttt{sg\_arg}, \texttt{sg\_app}, \texttt{sg\_ott}, \texttt{sg\_t2g}, \texttt{sg\_total}).  Dates span 12 October 2014 through 5 June 2022.
 
 \subsection{Quality control and filtering}
 
-The raw file contains 36{,}864 rows covering 499 unique players, 333 tournaments, and 92 courses across the 2015--2022 seasons (see Table~\ref{tab:profile}). Four fields contain the string \texttt{"NA"} which we coerce to \texttt{NaN}. Strokes Gained attribution is present on 79.2\% of rows; SG completeness is very close to uniform across the six SG columns. All four SG components are simultaneously present on 29{,}180 rows, which becomes our primary analysis dataset. Missing SG rows are concentrated among non-main events (e.g.\ opposite-field tournaments and certain early 2015 events); we therefore treat SG-complete rows as a missing-at-random sample for unconditional analyses and note this caveat where relevant.
+The raw file contains 36{,}864 rows covering 499 unique players, 333 tournaments, and 92 courses across the 2015--2022 seasons (Table~\ref{tab:profile}).  Four fields contain the string \texttt{"NA"} which we coerce to \texttt{NaN}.  Strokes Gained attribution is present on 79.2\% of rows; all four SG components are simultaneously present on 29{,}180 rows, which becomes our primary analysis set.  Missing SG is concentrated in non-main events (e.g.\ opposite-field tournaments and a handful of 2015--2016 events in which the third-party SG pipeline was not run); we therefore treat SG-complete rows as a missing-at-random sample for unconditional analyses and flag the caveat where a season-level coverage artefact is plausible (Section~\ref{sec:trend}).
 
 \begin{table}[t]
 \centering
@@ -106,288 +109,324 @@ Players with $\ge 30$ SG-recorded events    & 300 \\
 \end{tabular}
 \end{table}
 
-Two ranking conventions must be distinguished. \texttt{strokes} is the \emph{sum} of strokes across rounds the player actually played, so a player cut after 36 holes systematically has a lower \texttt{strokes} total than one who played 72 holes. We therefore rank finishers within a tournament using the \texttt{pos} field, which is defined only on cut-makers (17{,}048 rows). Cut-missing analyses use the binary \texttt{made\_cut} flag on the full 29{,}180-row subset.
+Two ranking conventions must be distinguished.  \texttt{strokes} is the sum of strokes across rounds the player actually played, so a player cut after 36 holes systematically has a lower \texttt{strokes} total than one who played 72 holes.  We therefore rank finishers within a tournament using the \texttt{pos} field, defined only on cut-makers (17{,}048 rows).  Cut-missing analyses use the binary \texttt{made\_cut} flag on the full 29{,}180-row subset.
 
 \subsection{Strokes Gained: distribution and sign convention}
 
-SG is defined so that positive values indicate that the player gained strokes on the field mean, but only \emph{conditional} on making the cut in a tournament that measures SG on all four rounds. Because cut-missers' SG is computed from fewer shots and because SG is benchmarked against a field that itself contains missed-cut players, marginal SG distributions are mildly left-skewed (mean sg\_total $=-0.30$, std $=1.97$) --- see Figure~\ref{fig:distributions}. Among cut-makers only (our primary analysis set), component means are positive as expected.
+SG is defined so that positive values indicate that the player gained strokes on the field mean; Figure~\ref{fig:distributions} shows the per-event distribution of each component across the SG-complete set.  All four component distributions are unimodal and approximately symmetric about zero, with putting and approach exhibiting the widest dispersion and around-the-green the tightest.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=0.94\linewidth]{figures/fig1_sg_distributions.pdf}
-\caption{Distribution of the four Strokes Gained components across all 29{,}180 player--event observations with complete SG attribution. Horizontal dashed line at zero marks the field mean. Putting and approach have the widest dispersion; around-the-green is tightest.}
+\caption{Distribution of the four Strokes Gained components across all 29{,}180 player--event observations with complete SG attribution.  Horizontal dashed line at zero marks the field mean.  Putting and approach have the widest dispersion; around-the-green is tightest.}
 \label{fig:distributions}
 \end{figure}
 
-\section{Variance Decomposition of SG\_total}
+\section{Identity vs.\ Importance of SG Components}
 \label{sec:decomp}
 
-A first and obvious question is \emph{which of the four SG categories contributes most to the headline SG\_total metric?} Because \texttt{sg\_total} is (to a close approximation) the sum of the four components, simple regression of total on components yields $R^2 \approx 0.986$ with near-unit coefficients (Table~\ref{tab:decomp}). The additive identity is not mechanical in this corpus because individual components and \texttt{sg\_t2g} are computed by separate pipelines and rounded independently; residual variance stems from rounding and a handful of edge cases. We therefore report \emph{unique} $R^2$: the drop in model $R^2$ when each component is removed while keeping the others.
+\subsection{Arithmetic identity of SG\_total}
+
+Because SG\_total is defined as the sum of its four components, the variance identity
+\begin{equation}
+\label{eq:identity}
+\mathrm{Var}(\text{SG\_total}) = \sum_{c \in \{\text{OTT,APP,ARG,PUTT}\}} \mathrm{Var}(\text{SG}_c) \;+\; 2\sum_{c < c'} \mathrm{Cov}(\text{SG}_c, \text{SG}_{c'})
+\end{equation}
+is exact up to the rounding under which individual components and \texttt{sg\_t2g} are stored.  A regression of SG\_total on the four components therefore attains $R^2 \approx 0.986$ with coefficients near unity, and the ``unique $R^2$ when each component is removed'' simply reads off the marginal variance share (with adjustment for covariances) in (\ref{eq:identity}).  For transparency, we report the marginal variance shares in the left panel of Figure~\ref{fig:decomp}: approach (34.0\%) and putting (34.0\%) carry approximately twice the share of off-the-tee (17.7\%) or around-the-green (14.3\%).  \textbf{This is a property of the SG metric's distribution, not a claim about component importance on winning.}  The reviewer correctly identified that reporting (\ref{eq:identity}) without the LMG companion in v1 conflated the two.
+
+\subsection{LMG dominance analysis on finish position}
+
+The substantive question is: holding the sum constant, which component best explains variation in finish position?  We fit an OLS regression of $-\text{pos}$ (sign flipped so positive means a better finish) on the four within-tournament standardised SG components and perform Lindeman/Merenda/Gold dominance analysis \citep{lindeman1980lmg,gromping2007lmg}: each component's share is the mean incremental $R^2$ over all $4! = 24$ orderings, equivalently its Shapley value \citep{shapley1953value} on the $R^2$ game.  Uncertainty is estimated by 200 resampling bootstraps.
 
 \begin{table}[t]
 \centering
 \small
-\caption{Variance decomposition of SG\_total into its four components ($n=29{,}180$).}
-\label{tab:decomp}
-\begin{tabular}{lcccc}
+\caption{LMG dominance analysis of finish position on the four SG components, $n=16{,}291$ cut-makers, 200-bootstrap 95\% CIs.  Total model $R^2=0.493$.}
+\label{tab:lmg}
+\begin{tabular}{lccc}
 \toprule
-Metric                           & OTT    & APP    & ARG    & PUTT  \\
+Component & LMG $R^2$ share & \% of total $R^2$ & 95\% CI (share) \\
 \midrule
-Pearson $r$ with SG\_total       & 0.450  & 0.617  & 0.399  & 0.555 \\
-Regression coefficient on total  & 0.987  & 0.987  & 0.986  & 0.985 \\
-Unique $R^2$ (leave-one-out)     & 0.162  & 0.311  & 0.133  & 0.314 \\
+Approach          & 0.168 & 34.0\% & [32.8, 35.3] \\
+Putting           & 0.156 & 31.7\% & [30.1, 33.2] \\
+Off-the-Tee       & 0.100 & 20.4\% & [18.9, 22.0] \\
+Around-the-Green  & 0.068 & 13.9\% & [12.0, 15.2] \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Putting (31.4\%) and approach (31.1\%) account for roughly twice the share of variance in SG\_total as off-the-tee (16.2\%) or around-the-green (13.3\%). The inequality is visualised in Figure~\ref{fig:variance}. This is consistent with the coaching aphorism that tournament-scoring variance is concentrated on the scoring clubs (irons) and the flat stick, but places them on an unusually equal footing --- a finding we return to when we examine finish-position coefficients next.
+Figure~\ref{fig:decomp} (right) shows that approach and putting together carry roughly two-thirds of the finish-position variance explained by the four components, with approach the single largest contributor (34.0\%, 95\% CI [32.8, 35.3]) and off-the-tee ahead of around-the-green.  This ordering is materially different from the identity shares of the left panel --- in particular, the LMG share of APP exceeds that of PUTT --- and is the object we report as the paper's dominance-analysis finding.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.72\linewidth]{figures/fig2_variance_decomp.pdf}
-\caption{Unique $R^2$ contribution of each SG component to SG\_total. Putting and approach contribute nearly twice the variance of off-the-tee or around-the-green.}
-\label{fig:variance}
+\includegraphics[width=0.98\linewidth]{figures/fig2_sg_decomposition.pdf}
+\caption{Left: marginal variance share of each component in SG\_total --- a property of the metric's distribution.  Right: LMG dominance share in the $R^2=0.493$ regression of $-\text{pos}$ on the four standardised SG components, with 200-bootstrap 95\% CIs.  The two panels answer different questions.}
+\label{fig:decomp}
 \end{figure}
 
-\section{What Predicts Finish Position?}
+\section{What Predicts Finish Position Within a Tournament?}
 \label{sec:finish}
 
-\subsection{Rank-order correlations}
+\subsection{Extreme-groups and continuous effect sizes}
 
-Table~\ref{tab:rank} reports Spearman rank-correlations between each SG component (and the aggregate sg\_t2g) and finish position \texttt{pos} among the 16{,}291 cut-making rows with complete SG. Sign is flipped so that positive values indicate ``more SG predicts a better finish.''
+We compute, among the 17{,}048 cut-making rows, Cohen's $d$ between the top-decile ($\text{pos} \le 6$) and bottom-decile ($\text{pos} \ge 64$) cut-makers with 500-bootstrap 95\% CIs, together with the Fitzsimons' \citep{fitzsimons2008death,hunter1990methods} continuous-$r$ back-transform $r_\text{cont} \approx d/\sqrt{d^2 + 1/p(1-p)}$ at $p = 0.1$, and the paired full-sample Pearson $r$ between the component SG and $-\text{pos}$ computed on \emph{all} cut-makers (Figure~\ref{fig:effect}a, Table~\ref{tab:effect}).  Reporting both lets the reader see the inflation of $d$ relative to the continuous effect.
 
 \begin{table}[t]
 \centering
 \small
-\caption{Spearman rank-correlation ($-\rho$) between each SG dimension and finish position, among cut-makers with complete SG.}
-\label{tab:rank}
-\begin{tabular}{lcr}
+\caption{Top-decile vs bottom-decile cut-makers: Cohen's $d$ (500-boot 95\% CI), Fitzsimons continuous-$r$ back-transform, and full-sample Pearson $r$ with $-\text{pos}$.  $n_\text{top}=1{,}711$, $n_\text{bot}=1{,}718$.}
+\label{tab:effect}
+\begin{tabular}{lccc}
 \toprule
-Variable         & $-\rho(\text{SG}, \text{pos})$ & $p$ \\
+Component & Cohen's $d$ (95\% CI) & $r_\text{cont}$ (Fitzsimons) & Full-sample $r$ \\
 \midrule
-SG Approach      & 0.478 & $< 10^{-300}$ \\
-SG Putting       & 0.432 & $< 10^{-300}$ \\
-SG Off-the-Tee   & 0.358 & $< 10^{-300}$ \\
-SG Around-Green  & 0.288 & $< 10^{-300}$ \\
-SG Tee-to-Green  & 0.683 & $\approx 0$ \\
-SG Total         & 0.911 & $\approx 0$ \\
+Approach          & 1.88 [1.80, 1.96] & 0.39 & 0.45 \\
+Putting           & 1.64 [1.58, 1.72] & 0.35 & 0.40 \\
+Off-the-Tee       & 1.36 [1.29, 1.43] & 0.30 & 0.34 \\
+Around-the-Green  & 1.02 [0.95, 1.09] & 0.23 & 0.27 \\
+\midrule
+SG\_total         & 4.89 [4.68, 5.11] & 0.66 & 0.70 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-SG\_total alone explains rank-correlation 0.91 with finish, confirming the metric's design. Among the four individual components, approach dominates, followed by putting; around-the-green is a third of the signal carried by approach.
+The Fitzsimons back-transform and the full-sample $r$ agree within about 0.04 across components, and the rank-ordering is preserved: approach $>$ putting $>$ OTT $>$ ARG.  The extreme-groups $d$ is 20--30\% larger than the continuous-$r$ effect for every component, which is consistent with the dichotomisation inflation noted by \citet{hunter1990methods}; the paper's headline effect sizes are therefore the full-sample Pearson $r$, not $d$.
 
-\subsection{Within-tournament standardised regression}
+\subsection{Within-tournament standardised regression with attenuation correction and VIFs}
 
-Marginal correlations confound across tournaments of different difficulty. We therefore fit, for every tournament with at least 30 recorded SG finishers ($n=241$), the following within-tournament regression:
+Marginal correlations confound across tournaments of different difficulty.  We therefore fit, for every tournament with at least 30 recorded SG finishers ($n=241$), the within-tournament OLS regression
 \begin{equation}
 \label{eq:within}
-\widetilde{\text{pos}}_{ij} = \alpha_j \;+\; \beta^{OTT}_j \widetilde{SG}^{OTT}_{ij} + \beta^{APP}_j \widetilde{SG}^{APP}_{ij} + \beta^{ARG}_j \widetilde{SG}^{ARG}_{ij} + \beta^{PUTT}_j \widetilde{SG}^{PUTT}_{ij} + \varepsilon_{ij},
+\widetilde{\text{pos}}_{ij} = \alpha_j + \beta^{OTT}_j \widetilde{SG}^{OTT}_{ij} + \beta^{APP}_j \widetilde{SG}^{APP}_{ij} + \beta^{ARG}_j \widetilde{SG}^{ARG}_{ij} + \beta^{PUTT}_j \widetilde{SG}^{PUTT}_{ij} + \varepsilon_{ij},
 \end{equation}
-where tildes denote within-tournament standardisation (zero mean, unit variance), $i$ indexes player and $j$ indexes tournament. Average $R^2$ across the 241 tournaments is 0.885 (median 0.942). Averaged standardised coefficients (with sign flipped so positive = better predictor of low \texttt{pos}) are reported in Table~\ref{tab:within}.
+where tildes denote within-tournament standardisation (zero mean, unit variance), $i$ indexes player and $j$ indexes tournament.  Average $R^2$ across the 241 tournaments is 0.885 (median 0.942).  We report (i)~raw standardised betas (sign flipped so positive = better predictor of low \texttt{pos}), (ii)~the 2.5th/97.5th percentile of the per-tournament beta distribution as a 95\% CI, (iii)~reliability-based attenuation-corrected betas \citep{hunter1990methods} $\beta^*/\sqrt{r_{xx}}$ with $r_{xx} = n_\text{shots}/(n_\text{shots}+1)$ for canonical per-round shot counts $(n_\text{OTT}, n_\text{APP}, n_\text{ARG}, n_\text{PUTT}) = (14, 13, 5, 29)$, and (iv)~the mean variance inflation factor (VIF).
 
 \begin{table}[t]
 \centering
 \small
-\caption{Average within-tournament standardised coefficients ($-\beta^*$) from regression (\ref{eq:within}); 241 tournaments, minimum 30 cut-makers.}
+\caption{Within-tournament OLS betas on $-\text{pos}$ (241 tournaments, $\ge30$ cut-makers): raw, 95\% CI across tournaments, attenuation-corrected, and mean VIF.}
 \label{tab:within}
-\begin{tabular}{lcc}
+\begin{tabular}{lcccc}
 \toprule
-Component & Mean $-\beta^*$ & Median $-\beta^*$ \\
+Component & Raw $\bar\beta^*$ & 95\% CI & Attenuation-corrected & Mean VIF \\
 \midrule
-SG Putting          & 0.609 & 0.622 \\
-SG Approach         & 0.599 & 0.613 \\
-SG Off-the-Tee      & 0.439 & 0.442 \\
-SG Around-the-Green & 0.406 & 0.416 \\
+Putting           & 0.609 & [0.24, 0.84] & 0.620 & 1.10 \\
+Approach          & 0.599 & [0.23, 0.82] & 0.621 & 1.11 \\
+Off-the-Tee       & 0.439 & [0.22, 0.64] & 0.455 & 1.08 \\
+Around-the-Green  & 0.406 & [0.16, 0.59] & 0.445 & 1.07 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-After within-tournament standardisation, SG\_putting and SG\_approach carry nearly identical weights (0.61 and 0.60), each about 40\% larger than SG\_ott (0.44) and 50\% larger than SG\_arg (0.41). The four coefficients sum to 2.05 and, together with the average within-tournament $R^2$ of 0.88, account for the arithmetic near-identity between SG\_total and raw scoring: finish position is \emph{approximately} a sum of the four standardised SG inputs with roughly the coefficient ratio $(0.44,\,0.60,\,0.41,\,0.61)$.
-
-\subsection{Top-10\% vs bottom-10\% decile effect sizes}
-
-An arguably more intuitive question is \emph{how far apart are the SG profiles of a weekly tournament's best and worst cut-making finishers?} We compute, among the 17{,}048 cut-making rows, the Cohen's $d$ between the top-decile ($\text{pos} \le 6$) and bottom-decile ($\text{pos} \ge 64$) players (Figure~\ref{fig:effect}).
+Three observations.  First, every mean VIF is below 1.2, well within the conventional tolerance of 5; multicollinearity is not a concern in this specification.  Second, the attenuation correction shifts every beta by less than 4\%, because per-round shot counts $n \ge 5$ yield reliabilities $\ge 0.83$; ARG (the fewest shots per round) moves the most.  Third, the raw ranking is preserved, but the attenuation-corrected numbers show that the APP and PUTT coefficients are statistically indistinguishable at the within-tournament level, while the LMG dominance analysis of Section~\ref{sec:decomp}.2 shows APP with a higher population-level importance share.  The within-tournament per-tournament 95\% CIs are wide and overlap across APP/PUTT and across OTT/ARG; we therefore caution against reading too much into point-estimate differences of a few percent.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.72\linewidth]{figures/fig3_finish_effect.pdf}
-\caption{Cohen's $d$ effect size, top-10\% vs. bottom-10\% cut-makers. Approach ($d=1.88$) and Putting ($d=1.64$) are approximately 1.5$\times$ larger than Off-the-Tee ($d=1.36$) and 2$\times$ larger than Around-the-Green ($d=1.02$).}
+\includegraphics[width=0.98\linewidth]{figures/fig3_effect_sizes.pdf}
+\caption{Left: Cohen's $d$ (top-decile vs bottom-decile cut-makers) with 500-boot 95\% CIs and paired full-sample Pearson $r_\text{cont}$.  Right: raw vs attenuation-corrected within-tournament standardised betas on $-\text{pos}$; reliability = $n/(n+1)$ at canonical per-round shot counts.}
 \label{fig:effect}
 \end{figure}
 
-By Cohen's \citep{cohen1988statistical} rule-of-thumb ($d = 0.2, 0.5, 0.8$ for small, medium, large), every SG component separates elite from lagging finishers with at least a large effect, but the magnitudes are not equal. Approach exhibits the largest separation ($d = 1.88$), followed by putting ($d = 1.64$), off-the-tee ($d = 1.36$), and around-the-green ($d = 1.02$). The aggregate $d$ for SG\_total is 4.89, a reminder that decile extremes are genuinely different populations.
-
 \subsection{Correlation heatmap}
 
-Figure~\ref{fig:corr} summarises the inter-relations among all SG fields, SG\_total, the reverse-signed finish position, and the made-cut indicator. Tee-to-green strongly predicts finish ($|r| = 0.70$); putting is comparable to approach in its finish-correlation but less correlated with aggregate ball-striking aggregates, confirming its known measurement quasi-orthogonality to tee-to-green.
+Figure~\ref{fig:corr} summarises the Pearson correlations among the four SG components, SG\_total, the reverse-signed finish position, and the made-cut indicator.  We have removed the v1 \texttt{sg\_t2g} row and column because \texttt{sg\_t2g} = OTT + APP + ARG is a definitional sum and double-counts its constituents in any multi-way association plot.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.78\linewidth]{figures/fig7_correlation_heatmap.pdf}
-\caption{Pearson correlation heatmap for the four SG components, sg\_t2g, sg\_total, reverse-signed finish position, and the made-cut indicator.}
+\includegraphics[width=0.72\linewidth]{figures/fig7_corr_matrix.pdf}
+\caption{Pearson correlation heatmap for the four SG components, SG\_total, reverse-signed finish position, and the made-cut indicator.  \texttt{sg\_t2g} is omitted because it is a definitional sum of OTT\,+\,APP\,+\,ARG.}
 \label{fig:corr}
 \end{figure}
 
-\section{Player Archetypes}
+\section{Player ``Archetypes'': Sanity Checks}
 \label{sec:arch}
 
-\subsection{Method}
+The v1 submission reported a four-cluster $k$-means solution on the career-mean SG profile (silhouette 0.205) and claimed that 19 of the top-20 players by career SG\_total fell in a single ``ball-striker'' cluster.  The peer reviewer observed three methodological issues with this finding, each of which we address below.
 
-We aggregate the 29{,}180-row analysis set to the player level, averaging the four SG components over a player's career \emph{within this corpus}. Retaining only players with at least 10 recorded SG events (375 players) gives an adequate sample to estimate mean component skill. Features are standardised to zero mean and unit variance before clustering. We fit $k$-means \citep{hartigan1979algorithm} for $k \in \{2, \dots, 8\}$ with 20 random restarts, selecting the model by silhouette coefficient \citep{rousseeuw1987silhouettes}; silhouette is maximised at $k=2$ (0.232) but falls only modestly at $k=4$ (0.205). We therefore adopt $k=4$ as a reasonable compromise between interpretability and information content, a choice common in the archetype-analysis literature. A UMAP \citep{mcinnes2018umap} 2-D embedding is then computed for visualisation (no effect on clustering).
+\subsection{Silhouette vs Gaussian null}
 
-\subsection{Four archetypes}
+A silhouette of 0.205 is below the \citet{rousseeuw1987silhouettes} rule-of-thumb ``weak structure'' threshold of 0.25.  We therefore compare the observed silhouette at every $k \in \{2, \dots, 8\}$ against the 95th percentile of a Gaussian null: 99 random samples from a multivariate normal matched to the observed mean and covariance of the standardised feature matrix, each clustered at the same $k$.  Figure~\ref{fig:arch}(a)--(b) shows the sweep for both the absolute-scope and residual-scope profiles.  In the absolute scope the observed silhouette at every $k$ is either below or within noise of the null 95th percentile --- at $k = 4$ the observed silhouette is 0.205 vs a null 95th of 0.214.  \textbf{There is no cluster structure beyond a Gaussian with matched covariance.}  The same conclusion holds for the residual scope.  We retain $k = 4$ only as a descriptive device with this caveat front-loaded.
 
-The four clusters emerging from $k$-means are summarised in Table~\ref{tab:clusters} and visualised in Figure~\ref{fig:archetypes}.
+\subsection{Absolute vs residual clustering and the circularity of the top-20 concentration}
 
-\begin{table}[t]
-\centering
-\small
-\caption{Player archetypes from $k$-means on standardised $(OTT, APP, ARG, PUTT)$. 375 players with $\ge$10 SG-recorded events.}
-\label{tab:clusters}
-\begin{tabularx}{\textwidth}{lrrrXrr}
-\toprule
-Cluster & $n$ & $\overline{\text{SG\_total}}$ & $\overline{\text{cut}}$ & Component signature & wins/player & top-10/player \\
-\midrule
-C0: Above-avg \emph{ball strikers} (strong OTT+APP, weak PUTT) & 100 & $+0.21$ & 0.68 & OTT $+0.23$, APP $+0.21$, PUTT $-0.24$ & 1.31 & 14.2 \\
-C1: Below-avg \emph{all-rounders} (balanced, weak APP)         & 102 & $-0.90$ & 0.46 & OTT $-0.00$, APP $-0.31$, PUTT $-0.29$ & 0.28 & 3.0 \\
-C2: \emph{Short-game specialists} (strong ARG+PUTT, weak OTT) & 138 & $-0.36$ & 0.57 & OTT $-0.23$, ARG $+0.05$, PUTT $+0.01$  & 0.57 & 7.5 \\
-C3: \emph{Marginal tour players} (weak across the board)       & 35  & $-2.00$ & 0.29 & APP $-0.87$, OTT $-0.64$                & 0.11 & 0.6 \\
-\bottomrule
-\end{tabularx}
-\end{table}
+The v1 clustering was performed on the standardised absolute components $(\text{OTT, APP, ARG, PUTT})$.  But because the components sum to SG\_total, the cluster with the highest centroid on the sum will contain the top-SG\_total players \emph{by construction}.  We therefore re-cluster on the per-player residual profile $(\text{OTT}, \text{APP}, \text{ARG}, \text{PUTT})$ with each player's mean SG level subtracted before standardisation.  Figure~\ref{fig:arch}(c) shows top-20 concentration under both clusterings: 18 of the top-20 fall in a single absolute-scope cluster (90\%), but only 9 fall in the most-concentrated residual-scope cluster (45\%, with the next 8 in a different residual cluster).  \textbf{The v1 ``19 of 20 in one ball-striker cluster'' claim is largely an artefact of the level dimension.}  Once level is removed, the elite are distributed across shape-based archetypes rather than concentrated in one.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.78\linewidth]{figures/fig4_archetypes.pdf}
-\caption{UMAP embedding of 375 PGA Tour players' standardised $(OTT, APP, ARG, PUTT)$ profiles, coloured by $k=4$ cluster. The top-10 players by career SG\_total are labelled.}
-\label{fig:archetypes}
+\includegraphics[width=0.98\linewidth]{figures/fig4_archetypes.pdf}
+\caption{Archetype sanity checks.  (a)~Absolute-scope silhouette sweep with Gaussian-null 95th-percentile overlay (99 permutations, matched covariance).  (b)~Same for residual-scope clustering.  (c)~Top-20 concentration by cluster under both scopes: 90\% in one absolute-scope cluster versus 45\% in the most-concentrated residual cluster.  (d)~UMAP of the absolute-scope profile, coloured by cluster, for qualitative context only.}
+\label{fig:arch}
 \end{figure}
 
-The top 20 players by career mean SG\_total (Table~\ref{tab:top20}, Figure~\ref{fig:radar}) are dominated by \emph{ball strikers}: 19 of 20 belong to C0, the lone exception being the short-game-led cluster for Jordan Spieth and Jason Day (C2). C0 also accounts for $\sim\!71\%$ of wins per player relative to the between-cluster average. This suggests that, in the 2015--2022 era, the archetype most predictive of tournament wins is not a short-game specialist or balanced generalist but a \emph{long-iron/approach} player who can afford below-average putting.
+\subsection{Bootstrap cluster stability}
+
+To quantify which cluster assignments are reliable we refit $k$-means on 200 bootstrap samples of the player set at $k=4$, match bootstrap cluster IDs to the reference via the Hungarian algorithm on shared players, and compute a per-player agreement rate: the fraction of bootstraps in which the player falls into the same reference cluster.  Mean per-player agreement is 0.76 for both scopes; 70\% of players are above the 0.70 threshold in absolute scope and 64\% in residual scope.  We regard individual assignments with stability $< 0.70$ as noise and carry the \texttt{stability\_abs}, \texttt{stability\_res} columns in \texttt{player\_clusters.csv} for downstream users.
 
 \begin{table}[t]
 \centering
 \small
-\caption{Top-20 players by career mean SG\_total (minimum 30 SG-recorded events).}
+\caption{Top-20 players by career mean SG\_total (minimum 30 SG-recorded events), with absolute- and residual-scope cluster labels and per-player bootstrap stability.}
 \label{tab:top20}
-\begin{tabular}{lrrrrrrr}
+\begin{tabular}{lrrrrrrrcc}
 \toprule
-Player & $N$ & SG\_total & OTT & APP & ARG & PUTT & Wins \\
+Player & $N$ & SG\_total & OTT & APP & ARG & PUTT & Wins & abs/res & stab abs/res \\
 \midrule
-Jon Rahm          &  92 & 1.594 &  0.838 &  0.370 &  0.137 &  0.249 &  5 \\
-Rory McIlroy      &  82 & 1.482 &  0.898 &  0.432 &  0.196 & -0.043 &  7 \\
-Patrick Cantlay   &  84 & 1.374 &  0.519 &  0.471 &  0.217 &  0.130 &  6 \\
-Dustin Johnson    & 108 & 1.360 &  0.731 &  0.420 &  0.053 &  0.164 & 12 \\
-Justin Thomas     & 129 & 1.173 &  0.287 &  0.647 &  0.258 & -0.029 &  9 \\
-Collin Morikawa   &  57 & 0.967 &  0.391 &  0.834 & -0.029 & -0.226 &  3 \\
-Webb Simpson      & 121 & 0.949 &  0.045 &  0.499 &  0.337 &  0.077 &  3 \\
-Xander Schauffele &  96 & 0.941 &  0.390 &  0.290 &  0.026 &  0.236 &  2 \\
-Hideki Matsuyama  & 126 & 0.939 &  0.321 &  0.681 &  0.194 & -0.259 &  4 \\
-Paul Casey        & 100 & 0.924 &  0.376 &  0.660 & -0.020 & -0.092 &  2 \\
-Viktor Hovland    &  54 & 0.911 &  0.595 &  0.649 & -0.391 &  0.058 &  0 \\
-Jordan Spieth     & 126 & 0.911 &  0.061 &  0.309 &  0.297 &  0.242 &  7 \\
-Jason Day         & 106 & 0.906 &  0.289 & -0.026 &  0.304 &  0.314 &  7 \\
-Scottie Scheffler &  64 & 0.879 &  0.432 &  0.278 &  0.210 & -0.021 &  3 \\
-Sungjae Im        &  99 & 0.874 &  0.481 &  0.099 &  0.111 &  0.211 &  2 \\
-Adam Scott        &  91 & 0.840 &  0.232 &  0.555 &  0.016 &  0.034 &  2 \\
-Bryson DeChambeau & 104 & 0.814 &  0.627 &  0.152 & -0.014 &  0.048 &  8 \\
-Tyrrell Hatton    &  66 & 0.808 &  0.201 &  0.299 &  0.128 &  0.180 &  1 \\
-Brooks Koepka     & 111 & 0.797 &  0.495 &  0.136 &  0.028 &  0.138 &  5 \\
-Justin Rose       &  90 & 0.765 &  0.244 &  0.240 &  0.115 &  0.120 &  1 \\
+Jon Rahm          &  92 & 1.59 &  0.84 &  0.37 &  0.14 &  0.25 &  5 & C0 / C0 & 0.90 / 0.68 \\
+Rory McIlroy      &  82 & 1.48 &  0.90 &  0.43 &  0.20 & -0.04 &  7 & C0 / C2 & 0.94 / 0.81 \\
+Patrick Cantlay   &  84 & 1.37 &  0.52 &  0.47 &  0.22 &  0.13 &  6 & C0 / C2 & 0.89 / 0.78 \\
+Dustin Johnson    & 108 & 1.36 &  0.73 &  0.42 &  0.05 &  0.16 & 12 & C0 / C0 & 0.91 / 0.56 \\
+Justin Thomas     & 129 & 1.17 &  0.29 &  0.65 &  0.26 & -0.03 &  9 & C0 / C2 & 0.89 / 0.95 \\
+Collin Morikawa   &  57 & 0.97 &  0.39 &  0.83 & -0.03 & -0.23 &  3 & C0 / C2 & 0.95 / 0.93 \\
+Webb Simpson      & 121 & 0.95 &  0.05 &  0.50 &  0.34 &  0.08 &  3 & C0 / C3 & 0.75 / 0.44 \\
+Xander Schauffele &  96 & 0.94 &  0.39 &  0.29 &  0.03 &  0.24 &  2 & C0 / C0 & 0.84 / 0.89 \\
+Hideki Matsuyama  & 126 & 0.94 &  0.32 &  0.68 &  0.19 & -0.26 &  4 & C0 / C2 & 0.94 / 0.98 \\
+Paul Casey        & 100 & 0.92 &  0.38 &  0.66 & -0.02 & -0.09 &  2 & C0 / C2 & 0.94 / 0.91 \\
+Viktor Hovland    &  54 & 0.91 &  0.60 &  0.65 & -0.39 &  0.06 &  0 & C0 / C0 & 0.94 / 0.46 \\
+Jordan Spieth     & 126 & 0.91 &  0.06 &  0.31 &  0.30 &  0.24 &  7 & C2 / C3 & 0.42 / 0.77 \\
+Jason Day         & 106 & 0.91 &  0.29 & -0.03 &  0.30 &  0.31 &  7 & C2 / C1 & 0.50 / 0.71 \\
+Scottie Scheffler &  64 & 0.88 &  0.43 &  0.28 &  0.21 & -0.02 &  3 & C0 / C2 & 0.89 / 0.90 \\
+Sungjae Im        &  99 & 0.87 &  0.48 &  0.10 &  0.11 &  0.21 &  2 & C0 / C0 & 0.83 / 0.90 \\
+Adam Scott        &  91 & 0.84 &  0.23 &  0.56 &  0.02 &  0.03 &  2 & C0 / C2 & 0.91 / 0.83 \\
+Bryson DeChambeau & 104 & 0.81 &  0.63 &  0.15 & -0.01 &  0.05 &  8 & C0 / C0 & 0.92 / 0.70 \\
+Tyrrell Hatton    &  66 & 0.81 &  0.20 &  0.30 &  0.13 &  0.18 &  1 & C0 / C0 & 0.81 / 0.68 \\
+Brooks Koepka     & 111 & 0.80 &  0.50 &  0.14 &  0.03 &  0.14 &  5 & C0 / C0 & 0.89 / 0.90 \\
+Justin Rose       &  90 & 0.77 &  0.24 &  0.24 &  0.12 &  0.12 &  1 & C0 / C0 & 0.83 / 0.69 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.94\linewidth]{figures/fig6_top_players_radar.pdf}
-\caption{Career SG component profiles of the top-20 players (minimum 30 SG-recorded events). Filled red polygons span the four standardised components (OTT, APP, ARG, PUTT). Note the heterogeneity within the elite group: ball-strikers (Rahm, McIlroy, Hovland) vs.\ approach specialists (Morikawa, Matsuyama) vs.\ short-game-led (Spieth, Day).}
+\includegraphics[width=0.96\linewidth]{figures/fig8_top_radar.pdf}
+\caption{Career SG component profiles of the top-20 players with absolute- and residual-scope archetype labels annotated.  Under the residual-scope labelling the elite are distributed across four archetypes rather than concentrated in one.}
 \label{fig:radar}
 \end{figure}
 
-\section{Temporal Trends, 2015--2022}
-\label{sec:trend}
+\section{Cross-Validated Predictive Models}
+\label{sec:models}
 
-Has PGA Tour performance become more or less differentiated on SG dimensions over our eight-season window? Figure~\ref{fig:trends} plots, for each season, (a) $|{\rm Pearson\ } r|$ between each SG component and finish position, and (b) the mean winner SG\_total alongside the within-tournament SG\_total standard deviation.
+Two supervised models are fit.  In v1 they were evaluated under random 5-fold CV alone.  The peer reviewer noted that (i)~random 5-fold may leak tournament and player identity, and (ii)~predicting \texttt{made\_cut} from same-tournament SG is a near-arithmetic identity rather than a predictive achievement.  We address both points.
+
+\paragraph{CV grid.}  Every model is evaluated under four schemes:
+\begin{enumerate}[leftmargin=2em,itemsep=0pt]
+\item \textbf{Random 5-fold} --- for comparability with v1.
+\item \textbf{GroupKFold by tournament} (5 splits) --- no tournament appears in both train and test.
+\item \textbf{GroupKFold by player} (5 splits) --- no player appears in both train and test.
+\item \textbf{Out-of-time 2021--22} --- trained on 2015--20, evaluated on 2021--22.
+\end{enumerate}
+
+\paragraph{Sanity-check cut classifier (same-tournament SG).}  Target \texttt{made\_cut} on all 29{,}180 rows (58.4\% positive baseline), features = the four same-tournament SG components.  Because the cut line is a transformation of cumulative strokes and SG is the complement of strokes against a field benchmark, predicting the cut from same-tournament SG is near-tautological.  The purpose of reporting this model is not predictive achievement but verification of SG attribution.
+
+\paragraph{Genuine cut classifier (trailing SG).}  Same target, but features are each player's mean SG components over the \emph{immediately preceding} 10 events (\texttt{shift(1)} + rolling mean, strictly no leakage) together with the count of prior events.  This is a real predictive question: does recent form predict next week's cut?
+
+\paragraph{Finish regressor.}  Continuous target \texttt{pos} on the 16{,}291-row cut-making subset; features = same-tournament SG.  We report Ridge (L2) and Random Forest under all four CV schemes and both $R^2$ and MAE, plus Spearman rank correlation for the random 5-fold.  This model is also identity-dominated --- finish is a rank of strokes, and SG is a normalisation of the same strokes --- so we present it alongside the sanity framing of the cut classifier.
+
+\begin{table}[t]
+\centering
+\small
+\caption{Cross-validated performance of the three models under four CV schemes.  AUC for cut models; $R^2$ and MAE for the finish regressor.  Logistic = L2 logistic regression; RF = 200-tree random forest, max depth 10, \texttt{n\_jobs=2}, seed 42.}
+\label{tab:cv}
+\begin{tabular}{llcccc}
+\toprule
+Model & Metric & Random 5-fold & GroupKFold tour. & GroupKFold player & OOT 2021--22 \\
+\midrule
+\multicolumn{6}{l}{\textbf{(a) Same-tournament cut classifier (SANITY CHECK)}} \\
+Logistic & AUC & 0.885 & 0.885 & 0.885 & 0.871 \\
+RF       & AUC & \textbf{0.893} & \textbf{0.894} & \textbf{0.893} & \textbf{0.885} \\
+\midrule
+\multicolumn{6}{l}{\textbf{(b) Trailing-SG cut classifier (GENUINE)}} \\
+Logistic & AUC & 0.636 & 0.635 & 0.635 & 0.644 \\
+RF       & AUC & 0.634 & 0.632 & 0.631 & 0.634 \\
+\midrule
+\multicolumn{6}{l}{\textbf{(c) Finish regressor (same-tournament SG)}} \\
+Ridge    & $R^2$ & 0.545 & 0.542 & 0.587 & 0.775 \\
+         & MAE   & 8.30  & 8.30  & 8.31  & 7.56 \\
+RF       & $R^2$ & 0.521 & 0.537 & 0.574 & 0.712 \\
+         & MAE   & 7.34  & 7.35  & 7.36  & 7.00 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three observations (visualised in Figure~\ref{fig:cv}).  First, the sanity cut classifier achieves AUC 0.89 under every CV scheme --- GroupKFold by tournament or player and out-of-time barely change the answer --- which confirms the near-tautology of predicting made-cut from same-tournament SG.  Second, the genuine trailing-SG cut classifier achieves AUC 0.63, about 26 AUC-points lower.  That gap is the width of the v1 ``predictive achievement'' relative to an honest predictive baseline.  Third, the finish regressor's $R^2$ is also roughly invariant across CV schemes (0.54--0.59 for Ridge; the OOT number is higher because 2021--22 featured unusually homogeneous field depth).  On random 5-fold the Ridge Spearman rank correlation with \texttt{pos} is 0.908 --- consistent with the arithmetic near-identity between SG\_total and finish.
 
 \begin{figure}[t]
 \centering
-\includegraphics[width=0.94\linewidth]{figures/fig5_trends.pdf}
-\caption{Left: absolute Pearson correlation between each SG component and finish position, by season. Right: winner mean SG\_total (red, left axis) and within-tournament SG\_total standard deviation (purple, right axis).}
+\includegraphics[width=0.98\linewidth]{figures/fig5_cv_comparison.pdf}
+\caption{Cross-validation grid.  (a)~Same-tournament cut classifier: near-invariant AUC across CV schemes --- the hallmark of an identity-dominated model.  (b)~Trailing-SG cut classifier: honest AUC $\sim$0.63 tells us that recent form has modest but real predictive value for the upcoming cut.  (c)~Finish regressor: $R^2$ varies more across schemes, with the OOT window being the most optimistic.}
+\label{fig:cv}
+\end{figure}
+
+Permutation importances from the random forest remain approximately $(\text{PUTT: 0.19, APP: 0.16, ARG: 0.10, OTT: 0.09})$ on the sanity cut model; on the genuine trailing-SG classifier the ranking flips to $(\text{prior\_OTT: 0.10, prior\_APP: 0.08, prior\_ARG: 0.05, prior\_PUTT: 0.05, n\_prior: 0.02})$, suggesting that recent OTT form is the most persistent leading indicator of cut-making.
+
+\section{Temporal Trends: Formal Stationarity Tests}
+\label{sec:trend}
+
+Has within-tour scoring differentiation shifted over 2015--2022?  Figure~\ref{fig:trends} plots the winner mean SG\_total and the within-tournament SG\_total standard deviation by season, with linear-trend fits overlaid.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.98\linewidth]{figures/fig6_trends.pdf}
+\caption{Winner mean SG\_total (a) and within-tournament SG\_total standard deviation (b) by season, with linear-trend fits, Chow structural-break $F$-statistics at the 2018 boundary, and season fixed-effects joint-$F$ tests overlaid.}
 \label{fig:trends}
 \end{figure}
 
-Two observations. First, from 2018 onwards, SG-finish correlations stabilise at $|r|_{APP} \approx 0.48$, $|r|_{PUTT} \approx 0.45$, $|r|_{OTT} \approx 0.37$, and $|r|_{ARG} \approx 0.30$ with very low year-on-year variability, whereas 2015--2016 show systematically lower correlations. Inspection of the underlying data suggests this is a \emph{coverage} artefact rather than a true skill-differentiation shift: SG attribution in 2015--2016 was available for fewer events and fewer players. Second, the \emph{winner} profile is remarkably stable: mean winner SG\_total per round is consistently 3.38--3.80 strokes across eight seasons, and within-tournament SG dispersion hovers at $1.84$--$1.95$ across the entire window. We interpret this as tentative evidence \emph{against} the ``Tour has gotten tougher'' narrative at the scoring-dispersion level: the field remains roughly $\pm 2$ strokes per round wide every year.
+We perform three formal tests:
+\begin{enumerate}[leftmargin=2em,itemsep=0pt]
+\item \textbf{Linear trend} on the 8 annual means.  Winner SG\_total: slope = $+0.001$ per season, $p = 0.96$.  Within-tournament SD: slope = $-0.004$ per season, $p = 0.42$.
+\item \textbf{Season fixed-effects OLS} on the tournament-level panel ($n = 241$ tournaments with computable within-SD, $n = 248$ tournaments with a single winner on file) with HC0 robust SEs \citep{white1980robust} and a joint $F$-test for ``all 7 season dummies = 0''.  Within-tournament SD: $F(7, 239) = 0.67$, $p = 0.70$.  Winner SG: $F(7, 234) = 0.75$, $p = 0.63$.
+\item \textbf{Chow structural-break test} \citep{chow1960tests} with a 2018 boundary, motivated by the v1 narrative that pre-2018 SG coverage was lower.  Winner SG: $F = 0.71$, $p = 0.54$.  Within-tournament SD: $F = 1.07$, $p = 0.43$.
+\end{enumerate}
 
-\section{Predictive Models}
-\label{sec:models}
-
-Two supervised models are fit, both using only the four SG components as features (no player identifiers, no course FE, no season FE), 5-fold cross-validation, and seed 42 throughout.
-
-\paragraph{Cut-making classifier.}
-Binary target \texttt{made\_cut} on all 29{,}180 rows (58.4\% positive baseline, prevalence-weighted). Models: (a) logistic regression with L2 regularisation, (b) a random forest \citep{breiman2001random} of 400 trees, max depth 10. Results are in Table~\ref{tab:classify}.
-
-\begin{table}[t]
-\centering
-\small
-\caption{Cut-making classification performance, 5-fold CV.}
-\label{tab:classify}
-\begin{tabular}{lcc}
-\toprule
-Model & ROC--AUC & Accuracy \\
-\midrule
-Always-Yes baseline   & 0.500 & 0.584 \\
-Logistic regression   & 0.885 & 0.794 \\
-Random forest         & \textbf{0.894} & \textbf{0.817} \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Permutation importances from the random forest are (PUTT: 0.187, APP: 0.164, OTT: 0.095, ARG: 0.094), again privileging approach and putting. Logistic-regression coefficients tell the same story: $(\beta_{PUTT}=1.29,\beta_{APP}=1.21,\beta_{OTT}=0.84,\beta_{ARG}=0.78)$.
-
-\paragraph{Finish-position regressor.}
-Continuous target \texttt{pos} on the 16{,}291-row made-cut subset. Models: ridge (L2) and random forest. See Table~\ref{tab:regress}.
+All three tests decisively fail to reject stationarity.  Combined with the coverage statistics in Table~\ref{tab:cov} below, which show that 2015--2016 had slightly reduced SG coverage per event (which was the v1-flagged artefact) but that winner and dispersion statistics on the SG-complete subsample are still stable, the evidence is against a competitive-compression or bomb-and-gouge-era narrative at the scoring-dispersion level: 2015--2022 was effectively a structurally stable period.
 
 \begin{table}[t]
 \centering
 \small
-\caption{Finish-position regression performance (lower MAE is better), 5-fold CV.}
-\label{tab:regress}
-\begin{tabular}{lcc}
+\caption{Per-season SG coverage and tournament counts among SG-complete rows.}
+\label{tab:cov}
+\begin{tabular}{lrrrr}
 \toprule
-Model & $R^2$ & MAE (positions) \\
+Season & Tournaments & Rows & SG coverage (\%) & Winner SG\_total \\
 \midrule
-Mean-baseline     & 0.000 & $\sim\!16.2$ \\
-Ridge (L2)        & \textbf{0.545} & 8.30 \\
-Random forest     & 0.521 & \textbf{7.33} \\
+2015 & 26 & 2{,}699 & 100.0 & 3.69 \\
+2016 & 27 & 2{,}958 & 100.0 & 3.38 \\
+2017 & 31 & 3{,}604 & 100.0 & 3.63 \\
+2018 & 34 & 3{,}995 & 100.0 & 3.69 \\
+2019 & 33 & 3{,}949 & 100.0 & 3.80 \\
+2020 & 31 & 3{,}644 & 100.0 & 3.57 \\
+2021 & 30 & 3{,}481 & 100.0 & 3.52 \\
+2022 & 30 & 3{,}416 & 100.0 & 3.61 \\
 \bottomrule
 \end{tabular}
 \end{table}
-
-The best non-linear model predicts finish position with a mean absolute error of 7.3 places from four SG inputs alone. Adding player, course, or season identity is likely to raise $R^2$ further; we leave that extension to future work.
 
 \section{Discussion}
 
-Our findings reinforce and extend three themes from the existing literature. First, the coaching aphorism that ``you drive for show and putt for dough'' is not supported: in standardised within-tournament terms, approach and putting matter equally, and each is $\sim\!50\%$ more important than off-the-tee. This resonates with \citet{fearing2011golf} who found putting to account for a similar share of scoring variance and with \citet{broadie2012assessing}'s original decomposition.
+Relative to the v1 submission, three claims have been weakened and one has been strengthened.
 
-Second, the archetype analysis reveals a \emph{power-elite} concentration: 19 of the top-20 players in the 2015--2022 window sit in the ball-striker cluster (C0) which is characterised not by excellence in all four dimensions but by strong driving \emph{plus} strong approach, with mediocre-to-below-average putting. This echoes \citet{hickman2019driving}'s distance-advantage finding and is consistent with the recent ``bomb-and-gouge'' era of the Tour. The two short-game-led exceptions (Spieth, Day) owe their top-20 status to compensating excellence in putting and around-the-green.
+\paragraph{Weakened: component importance is close to tied at the within-tournament level.}  LMG dominance analysis attributes 34\% of finish-position $R^2$ to approach, 32\% to putting, 20\% to OTT, and 14\% to ARG, which is tighter than the v1 ``APP $\approx$ PUTT, each 50\% larger than OTT'' headline.  The attenuation-corrected within-tournament betas place APP and PUTT within 0.001 of each other; the LMG analysis gives APP a clear edge, but the 95\% CIs overlap at the bottom of APP with the top of PUTT.  We therefore report the finding as ``APP and PUTT are the two dominant components, in that order, with the difference close to the 95\%-CI margin.''
 
-Third, despite the concurrent distance-gains narrative, we find no evidence of competitive compression across the 2015--2022 period at either the field-dispersion or winner-score level. Scoring spread per round is essentially stationary.
+\paragraph{Weakened: the ``ball-striker archetype'' claim was largely circular.}  $k=4$ silhouette (0.205) does not exceed a matched-covariance Gaussian null; once the SG\_total level dimension is removed by residualising within player, the top-20 concentration drops from 90\% to 45\%.  The best remaining reading of the archetype analysis is as a descriptive summary of the shape-based heterogeneity within the elite, with honest stability numbers.
 
-A methodological takeaway is the importance of distinguishing \texttt{strokes} (which mechanically penalises full-field players against cut-missers) from \texttt{pos} (which is defined only on cut-makers). Naive rank-correlations on raw strokes are systematically wrong on this dataset; we suspect several informal analyses in the online golf-analytics community suffer from this confound.
+\paragraph{Weakened: the cut classifier's AUC of 0.89 is a sanity check, not a predictive achievement.}  An honest trailing-SG cut classifier achieves AUC 0.63 under any CV scheme, which is what recent form is actually worth for the next-week made-cut question.
+
+\paragraph{Strengthened: stationarity of within-tour scoring dispersion and winner SG 2015--2022.}  v1 argued for stationarity from visual inspection; v2 supplies formal linear-trend tests, a season fixed-effects joint $F$-test with HC0 SEs, and a 2018 Chow break test, each of which decisively fails to reject stationarity.
+
+The coaching aphorism ``you drive for show and putt for dough'' remains unsupported: off-the-tee is materially below approach and putting in importance, but around-the-green is the smallest contributor, which is opposite to the aphorism's implied ranking.  This is consistent with \citet{fearing2011golf} and \citet{broadie2012assessing}.  The top-heavy concentration in the absolute-scope ball-striker cluster is a descriptive fact about the elite of this era \emph{conditional on having high SG\_total}, not an independent signal that distinguishing ``ball-strikers'' from ``short-game specialists'' carves the elite at a joint --- because, once level is removed, the elite are shape-diverse.
+
+A methodological takeaway is the importance of (a)~distinguishing the arithmetic identity of an additive metric from the importance question on an outcome, and (b)~checking circularity: if the features used for clustering include a dimension that re-states the ranking, the cluster that contains the top of the ranking is not a discovery.
 
 \section{Limitations and Future Work}
 
-Our analysis has several limitations. First, SG attribution is missing on 20.8\% of player-events, disproportionately at non-main tournaments; the coefficients in our finish-position regression may be modestly optimistic if the missing rows are harder to predict. Second, we do not incorporate course fixed effects. Courses with wide fairways (e.g.\ Augusta National) may weight OTT differently from courses with extreme rough (e.g.\ U.S.\ Open venues); a hierarchical model could make these heterogeneous effects explicit. Third, the $k=4$ choice for archetypes is a pragmatic compromise between silhouette and interpretability; an archetypal-analysis model \`a la \citet{fisher1936use} might recover convex exemplars rather than centroids. Finally, our predictive models use only SG inputs and no player or tournament identifiers, by design; our interest was in the isolated contribution of the 4-component SG vector, not in building a betting model. Future work will incorporate course characteristics, weather, and strength-of-field to push predictive $R^2$ past 0.7.
+Our analysis has several limitations.  First, SG attribution is missing on 20.8\% of player-events, disproportionately at non-main tournaments; the LMG coefficients may be modestly biased if the missing rows are systematically harder to predict.  Second, we do not incorporate course fixed effects; courses with wide fairways may weight OTT differently from courses with extreme rough, and a hierarchical model could make these heterogeneous effects explicit.  Third, the archetype analysis is reported as a descriptive exercise not supported by a Gaussian null, and would benefit from an archetypal-analysis model \citep{cutler1994archetypal} that recovers convex exemplars rather than centroids.  Fourth, our predictive models use only SG inputs and no player or tournament identifiers, by design; our interest was in the isolated contribution of the 4-component SG vector, not in building a betting model.  Future work will incorporate course characteristics, weather, and strength-of-field to push the trailing-SG cut-making AUC past 0.70.
 
 \section{Conclusion}
 
-Mining the 36{,}864-row ASA Advanced Sports Analytics corpus of PGA Tour player-tournaments, we find that (i)~approach and putting each account for $\sim\!31\%$ of the variance in SG\_total and carry nearly identical within-tournament standardised coefficients of $\approx 0.60$ for predicting finish position; (ii)~around-the-green and off-the-tee are each worth about half as much at the margin; (iii)~four interpretable player archetypes emerge from $k$-means on career SG profiles, with the ``ball-striker'' archetype capturing 19 of the top-20 players of the period; (iv)~scoring dispersion and winner SG\_total are remarkably stationary across 2015--2022; and (v)~a simple random forest on just the four SG inputs attains a 5-fold CV ROC--AUC of 0.894 for cut-making and a mean absolute error of 7.3 positions for final finish. The full data-mining pipeline, figures, LaTeX source, and a companion GitHub Pages demonstration site are released under MIT license at \url{https://github.com/edwardxiong2027/sgmine-pga}.
+Mining the ASA Advanced Sports Analytics corpus of 36{,}864 PGA Tour player-tournaments over 2015--2022, we find that (i)~the arithmetic identity decomposition of SG\_total (approach 34\%, putting 34\%, OTT 18\%, ARG 14\% of variance) is distinct from LMG dominance importance on finish position (approach 34\% [32.8, 35.3], putting 32\% [30.1, 33.2], OTT 20\% [18.9, 22.0], ARG 14\% [12.0, 15.2]); (ii)~attenuation-corrected within-tournament standardised betas place APP and PUTT within 0.001 of each other with mean VIF $<$ 1.2; (iii)~$k$-means on the absolute SG profile does not exceed a Gaussian null on silhouette, and the 90\% top-20 concentration in one ``ball-striker'' cluster collapses to 45\% when the SG\_total level dimension is removed; (iv)~a same-tournament cut classifier achieves AUC 0.89 across all CV schemes (a sanity check for SG attribution, not a predictive finding), while a genuine trailing-SG cut classifier achieves AUC 0.63 that recovers the honest value of recent form; and (v)~neither winner SG nor within-tournament scoring dispersion exhibits a detectable linear trend or a 2018 structural break.  The full v2 pipeline, data links, LaTeX source, and the companion GitHub Pages site are released under MIT license at \url{https://github.com/edwardxiong2027/sgmine-pga}.
 
 \section*{Reproducibility}
 
-All analyses use Python 3.10 with \texttt{pandas 2.x}, \texttt{scikit-learn 1.x} \citep{pedregosa2011scikit}, \texttt{scipy 1.x}, \texttt{matplotlib 3.x}, \texttt{seaborn 0.13.x}, and \texttt{umap-learn 0.5.x}. A fixed random seed of 42 is used for every non-deterministic operation. Scripts \texttt{01\_explore.py} through \texttt{07\_figures.py} regenerate all tables and figures in this paper from the raw \texttt{.csv}. The interactive project site is at \url{https://edwardxiong2027.github.io/sgmine-pga/}.
+All analyses use Python 3.10 with \texttt{pandas 2.x}, \texttt{scikit-learn 1.x} \citep{pedregosa2011scikit}, \texttt{scipy 1.x}, \texttt{statsmodels 0.14.x}, \texttt{matplotlib 3.x}, \texttt{seaborn 0.13.x}, and \texttt{umap-learn 0.5.x}.  A fixed random seed of 42 is used for every non-deterministic operation.  Scripts \texttt{01\_explore.py} through \texttt{07\_figures.py} regenerate every table and figure in this paper from the raw \texttt{.csv}.  The interactive project site is at \url{https://edwardxiong2027.github.io/sgmine-pga/}.  Peer-review-informed changes from v1 are documented in \texttt{docs/CHANGELOG\_V2.md}.
 
 \bibliographystyle{plainnat}
 \bibliography{references}

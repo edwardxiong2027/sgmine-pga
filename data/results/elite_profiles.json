@@ -13,7 +13,10 @@
       "made_cut_rate": 0.902,
       "wins": 5,
       "top10s": 46,
-      "cluster": 0
+      "cluster_abs": 0,
+      "cluster_res": 0,
+      "stability_abs": 0.895,
+      "stability_res": 0.675
     },
     {
       "player": "Rory McIlroy",
@@ -26,7 +29,10 @@
       "made_cut_rate": 0.89,
       "wins": 7,
       "top10s": 38,
-      "cluster": 0
+      "cluster_abs": 0,
+      "cluster_res": 2,
+      "stability_abs": 0.935,
+      "stability_res": 0.81
     },
     {
       "player": "Patrick Cantlay",
@@ -39,7 +45,10 @@
       "made_cut_rate": 0.905,
       "wins": 6,
       "top10s": 31,
-      "cluster": 0
+      "cluster_abs": 0,
+      "cluster_res": 2,
+      "stability_abs": 0.885,
+      "stability_res": 0.775
     },
     {
       "player": "Dustin Johnson",
@@ -52,7 +61,10 @@
       "made_cut_rate": 0.861,
       "wins": 12,
       "top10s": 51,
-      "cluster": 0
+      "cluster_abs": 0,
+      "cluster_res": 0,
+      "stability_abs": 0.91,
+      "stability_res": 0.555
     },
     {
       "player": "Justin Thomas",
@@ -65,7 +77,10 @@
       "made_cut_rate": 0.814,
       "wins": 9,
       "top10s": 53,
-      "cluster": 0
+      "cluster_abs": 0,
+      "cluster_res": 2,
+      "stability_abs": 0.89,
+      "stability_res": 0.95
     },
     {
       "player": "Collin Morikawa",
@@ -78,7 +93,10 @@
       "made_cut_rate": 0.86,
       "wins": 3,
       "top10s": 20,
-      "cluster": 0
+      "cluster_abs": 0,
+      "cluster_res": 2,
+      "stability_abs": 0.95,
+      "stability_res": 0.925
     },
     {
       "player": "Webb Simpson",
@@ -91,7 +109,10 @@
       "made_cut_rate": 0.843,
       "wins": 3,
       "top10s": 35,
-      "cluster": 0
+      "cluster_abs": 0,
+      "cluster_res": 3,
+      "stability_abs": 0.75,
+      "stability_res": 0.435
     },
     {
       "player": "Xander Schauffele",
@@ -104,7 +125,10 @@
       "made_cut_rate": 0.792,
       "wins": 2,
       "top10s": 24,
-      "cluster": 0
+      "cluster_abs": 0,
+      "cluster_res": 0,
+      "stability_abs": 0.84,
+      "stability_res": 0.885
     },
     {
       "player": "Hideki Matsuyama",
@@ -117,7 +141,10 @@
       "made_cut_rate": 0.833,
       "wins": 4,
       "top10s": 32,
-      "cluster": 0
+      "cluster_abs": 0,
+      "cluster_res": 2,
+      "stability_abs": 0.94,
+      "stability_res": 0.975
     },
     {
       "player": "Paul Casey",
@@ -130,7 +157,10 @@
       "made_cut_rate": 0.84,
       "wins": 2,
       "top10s": 33,
-      "cluster": 0
+      "cluster_abs": 0,
+      "cluster_res": 2,
+      "stability_abs": 0.935,
+      "stability_res": 0.91
     },
     {
       "player": "Viktor Hovland",
@@ -143,7 +173,10 @@
       "made_cut_rate": 0.889,
       "wins": 0,
       "top10s": 11,
-      "cluster": 0
+      "cluster_abs": 0,
+      "cluster_res": 0,
+      "stability_abs": 0.935,
+      "stability_res": 0.455
     },
     {
       "player": "Jordan Spieth",
@@ -156,7 +189,10 @@
       "made_cut_rate": 0.81,
       "wins": 7,
       "top10s": 38,
-      "cluster": 2
+      "cluster_abs": 2,
+      "cluster_res": 3,
+      "stability_abs": 0.42,
+      "stability_res": 0.765
     },
     {
       "player": "Jason Day",
@@ -169,7 +205,10 @@
       "made_cut_rate": 0.755,
       "wins": 7,
       "top10s": 31,
-      "cluster": 2
+      "cluster_abs": 2,
+      "cluster_res": 1,
+      "stability_abs": 0.495,
+      "stability_res": 0.705
     },
     {
       "player": "Scottie Scheffler",
@@ -182,7 +221,10 @@
       "made_cut_rate": 0.781,
       "wins": 3,
       "top10s": 17,
-      "cluster": 0
+      "cluster_abs": 0,
+      "cluster_res": 2,
+      "stability_abs": 0.89,
+      "stability_res": 0.9
     },
     {
       "player": "Sungjae Im",
@@ -195,7 +237,10 @@
       "made_cut_rate": 0.818,
       "wins": 2,
       "top10s": 22,
-      "cluster": 0
+      "cluster_abs": 0,
+      "cluster_res": 0,
+      "stability_abs": 0.83,
+      "stability_res": 0.895
     },
     {
       "player": "Adam Scott",
@@ -208,7 +253,10 @@
       "made_cut_rate": 0.835,
       "wins": 2,
       "top10s": 23,
-      "cluster": 0
+      "cluster_abs": 0,
+      "cluster_res": 2,
+      "stability_abs": 0.91,
+      "stability_res": 0.825
     },
     {
       "player": "Bryson DeChambeau",
@@ -221,7 +269,10 @@
       "made_cut_rate": 0.74,
       "wins": 8,
       "top10s": 33,
-      "cluster": 0
+      "cluster_abs": 0,
+      "cluster_res": 0,
+      "stability_abs": 0.92,
+      "stability_res": 0.7
     },
     {
       "player": "Tyrrell Hatton",
@@ -234,7 +285,10 @@
       "made_cut_rate": 0.788,
       "wins": 1,
       "top10s": 16,
-      "cluster": 0
+      "cluster_abs": 0,
+      "cluster_res": 0,
+      "stability_abs": 0.805,
+      "stability_res": 0.68
     },
     {
       "player": "Brooks Koepka",
@@ -247,7 +301,10 @@
       "made_cut_rate": 0.775,
       "wins": 5,
       "top10s": 32,
-      "cluster": 0
+      "cluster_abs": 0,
+      "cluster_res": 0,
+      "stability_abs": 0.89,
+      "stability_res": 0.9
     },
     {
       "player": "Justin Rose",
@@ -260,9 +317,29 @@
       "made_cut_rate": 0.756,
       "wins": 1,
       "top10s": 29,
-      "cluster": 0
+      "cluster_abs": 0,
+      "cluster_res": 0,
+      "stability_abs": 0.825,
+      "stability_res": 0.685
     }
   ],
   "career_mean_sg_total_all_eligible": -0.3544898686583726,
-  "career_mean_sg_total_top20": 1.0104000000000002
+  "career_mean_sg_total_top20": 1.0104000000000002,
+  "top20_abs_concentration": {
+    "counts": {
+      "0": 18,
+      "2": 2
+    },
+    "top_cluster_share": 0.9
+  },
+  "top20_res_concentration": {
+    "counts": {
+      "0": 9,
+      "1": 1,
+      "2": 8,
+      "3": 2
+    },
+    "top_cluster_share": 0.45
+  },
+  "note": "v1 claimed 19 of the top-20 fell in a single 'ball-striker' cluster C0. In v2 the absolute-scope clustering recovers a similar concentration (which is mostly a re-statement of the SG_total ranking, since the clustering operates on raw component means), but the residual-scope clustering \u2014 which removes each player's SG_total mean level before clustering \u2014 disperses the top-20 across multiple clusters, which we interpret as evidence that v1's archetype claim was largely circular."
 }

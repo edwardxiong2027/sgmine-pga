@@ -1,9 +1,10 @@
-# SGmine-PGA — What Separates Elite PGA Tour Players?
+# SGmine-PGA — Within-Tour Determinants of Finish Position on the PGA Tour (2015–2022)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
 [![Paper PDF](https://img.shields.io/badge/paper-PDF-red.svg)](paper/paper.pdf)
 [![GitHub Pages](https://img.shields.io/badge/site-live-brightgreen)](https://edwardxiong2027.github.io/sgmine-pga/)
+[![Version](https://img.shields.io/badge/version-v2-orange.svg)](docs/CHANGELOG_V2.md)
 
 A data-mining study of Strokes Gained, player archetypes, and finish position
 across **333 PGA Tour tournaments** (**2015–2022**), built on the public
@@ -11,41 +12,72 @@ Advanced Sports Analytics corpus distributed on Kaggle
 ([Khodarev, 2022](https://www.kaggle.com/datasets/robikscube/pga-tour-golf-data-20152022);
 [Advanced Sports Analytics](https://www.advancedsportsanalytics.com/pga-raw-data)).
 
-> **TL;DR.** Across 29,180 player–event rows with complete Strokes Gained
-> attribution, **approach and putting each explain ~31% of the unique variance
-> in `sg_total`** and each carries a within-tournament standardised coefficient
-> of ≈ 0.60 for predicting finish position — about 50% larger than off-the-tee
-> or around-the-green. Four player archetypes emerge from *k*-means on career
-> SG profiles; the "ball-striker" archetype captures **19 of the top 20**
-> players by career SG_total. A random forest on just four SG inputs predicts
-> cut-making at **ROC–AUC = 0.894** (5-fold CV) and finish position with
-> **MAE ≈ 7.3 places**.
+> **TL;DR (v2).** Across 29,180 player–event rows with complete Strokes Gained
+> attribution, **LMG dominance analysis** attributes 34.0% [32.8, 35.3] of the
+> explainable variance in finish position to **approach**, 31.7% [30.1, 33.2]
+> to **putting**, 20.4% [18.9, 22.0] to **off-the-tee**, and 13.9% [12.0, 15.2]
+> to **around-the-green**. The v1 "19-of-20 in one ball-striker cluster"
+> archetype claim was largely **circular**: removing the SG_total level
+> dimension via residual-scope clustering drops top-20 concentration from 90%
+> to 45%. A same-tournament cut classifier (AUC 0.89) is a **sanity check**,
+> not a predictive result; a genuine trailing-SG cut classifier achieves
+> AUC 0.63. Neither winner SG nor within-tournament scoring dispersion
+> exhibits a detectable linear trend or 2018 Chow structural break.
+
+> This repository is a **v2 peer-review-revised** release. The original
+> analyses and their v1 claims are preserved in git history (tag `v1`); the
+> methodological changes are documented in
+> [`docs/CHANGELOG_V2.md`](docs/CHANGELOG_V2.md).
 
 ---
 
 ## Paper
 
-- **Title:** *What Separates Elite PGA Tour Players? A Data-Mining Study of
-  Strokes Gained, Player Archetypes, and Finish Position in 333 Tournaments
-  (2015–2022)*
+- **Title:** *Within-Tour Determinants of Finish Position on the PGA Tour,
+  2015–2022: Dominance Analysis of Strokes Gained, Honest Archetype
+  Clustering, and Leakage-Aware Predictive Models*
 - **Author:** Edward Xiong
-- **PDF:** [`paper/paper.pdf`](paper/paper.pdf)
+- **PDF:** [`paper/paper.pdf`](paper/paper.pdf) · 17 pages
 - **LaTeX source:** [`paper/paper.tex`](paper/paper.tex), [`paper/references.bib`](paper/references.bib)
 - **Figures (PDF + PNG):** [`paper/figures/`](paper/figures/)
 
-### Key findings
+### Key v2 findings
 
 | Finding | Value |
 |---|---|
-| Unique R² of SG-Approach within SG_total | 0.311 |
-| Unique R² of SG-Putting within SG_total | 0.314 |
-| Within-tournament β* for SG-Approach (mean of 241 tourns) | 0.60 |
-| Within-tournament β* for SG-Putting (mean of 241 tourns) | 0.61 |
-| Cohen's *d*, top-10% vs bot-10% finishers, SG-Approach | 1.88 |
-| Cohen's *d*, top-10% vs bot-10% finishers, SG-Putting | 1.64 |
-| Cut-making ROC–AUC, random forest, 5-fold CV | 0.894 |
-| Finish-position R², ridge, 5-fold CV | 0.545 |
-| 4 player archetypes from k-means (silhouette = 0.205) | C0-C3 |
+| LMG share (finish pos) of SG-Approach (95% CI) | 34.0% [32.8, 35.3] |
+| LMG share of SG-Putting (95% CI) | 31.7% [30.1, 33.2] |
+| LMG share of SG-Off-the-Tee (95% CI) | 20.4% [18.9, 22.0] |
+| LMG share of SG-Around-the-Green (95% CI) | 13.9% [12.0, 15.2] |
+| Within-tournament attenuation-corrected β*, APP | 0.62 |
+| Within-tournament attenuation-corrected β*, PUTT | 0.62 |
+| Cohen's *d* (top-10% vs bot-10%), APP (95% CI) | 1.88 [1.80, 1.96] |
+| Fitzsimons continuous-r back-transform, APP | 0.39 |
+| Full-sample Pearson r, APP ↔ –pos | 0.45 |
+| Sanity same-tournament cut AUC (any CV scheme) | 0.89 |
+| Genuine trailing-SG cut AUC (any CV scheme) | 0.63 |
+| Silhouette at k=4 / Gaussian-null 95th pct (abs scope) | 0.205 / 0.214 |
+| Top-20 concentration in one cluster — abs vs res | 90% / 45% |
+| Winner SG_total linear trend slope (p) | +0.001/yr (p=0.96) |
+| Within-tournament SD linear trend slope (p) | −0.004/yr (p=0.42) |
+| Chow 2018 break test — winner SG, within-SD | F=0.71 (p=0.54); F=1.07 (p=0.43) |
+
+### What changed vs v1 (short version)
+
+| Reviewer concern | v1 | v2 |
+|---|---|---|
+| §4 "variance decomposition" | Identity mislabeled as importance | Identity + LMG dominance analysis w/ CIs |
+| APP≈PUTT≈50%>OTT claim | Raw betas only | Attenuation-correction + VIFs + CIs |
+| k=4 archetypes, silhouette 0.205 | Treated as structure | Gaussian null + residual clustering + stability |
+| "19 of top-20 in C0" | Headline finding | Shown to be circular (abs vs res: 90% → 45%) |
+| Same-tournament cut AUC 0.89 | Predictive achievement | Relabeled sanity check + genuine trailing model (AUC 0.63) |
+| CV | Random 5-fold only | 4-scheme grid (random, GKF-tourn, GKF-player, OOT 2021-22) |
+| Stationarity | Asserted from visual inspection | Linear trend test + season FE joint-F + 2018 Chow break |
+| sg_t2g in decomposition | Double-counted | Dropped (OTT+APP+ARG sum) |
+| "Elite" in title | Ambiguous between within-tour & elite-vs-amateur | Retitled to explicit within-tour framing |
+
+See [`docs/CHANGELOG_V2.md`](docs/CHANGELOG_V2.md) for the full mapping of
+reviewer concerns to code/paper changes.
 
 ## Interactive site
 
@@ -63,23 +95,26 @@ sgmine-pga/
 ├── requirements.txt
 ├── .gitignore
 ├── paper/
-│   ├── paper.tex             ← LaTeX source
-│   ├── paper.pdf             ← compiled PDF (14 pages, ~550 KB)
-│   ├── references.bib        ← 20 citations
-│   └── figures/              ← 7 figures (PDF + PNG)
+│   ├── paper.tex             ← LaTeX source (v2, retitled)
+│   ├── paper.pdf             ← compiled PDF (17 pages)
+│   ├── references.bib        ← 30 citations incl. LMG/Shapley/Fitzsimons/Chow/BH
+│   └── figures/              ← 8 figures (PDF + PNG)
 ├── src/
 │   ├── 01_explore.py         ← dataset profiling
-│   ├── 02_sg_correlations.py ← variance decomposition + rank correlations
-│   ├── 03_predictive_models.py ← logistic + RF + ridge with 5-fold CV
-│   ├── 04_player_archetypes.py ← k-means + UMAP on career SG profile
-│   ├── 05_temporal_trends.py ← per-season SG-finish correlations
-│   ├── 06_elite_profiles.py  ← top-20 leaderboard and radar-ready data
+│   ├── 02_sg_correlations.py ← SG_total identity + LMG dominance + attenuation + VIF
+│   ├── 03_predictive_models.py ← sanity + genuine cut classifiers + finish regressor,
+│   │                              4-scheme CV grid (random, GKF-tournament, GKF-player, OOT)
+│   ├── 04_player_archetypes.py ← k-means w/ Gaussian null + residual clustering
+│   │                              + bootstrap stability (Hungarian-matched)
+│   ├── 05_temporal_trends.py ← linear-trend + season-FE + Chow 2018 break tests
+│   ├── 06_elite_profiles.py  ← top-20 leaderboard w/ absolute+residual archetype labels
 │   └── 07_figures.py         ← publication figures (PDF + PNG)
 ├── data/
 │   ├── asa_pga_tourn_level.csv  ← original ASA corpus (Kaggle mirror)
 │   ├── profile/profile.json     ← dataset profile
 │   └── results/                  ← JSON + CSV outputs of each script
 └── docs/                     ← GitHub Pages site (index.html + assets)
+    └── CHANGELOG_V2.md       ← reviewer-comment-to-fix mapping
 ```
 
 ## Reproduce everything
@@ -91,14 +126,14 @@ cd sgmine-pga
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
-# 2. run the analysis pipeline (each step is self-contained)
+# 2. run the v2 analysis pipeline (each step is self-contained)
 python src/01_explore.py            # --> data/profile/profile.json
 python src/02_sg_correlations.py    # --> data/results/sg_correlations.json
 python src/03_predictive_models.py  # --> data/results/predictive_models.json
 python src/04_player_archetypes.py  # --> data/results/player_archetypes.json
 python src/05_temporal_trends.py    # --> data/results/temporal_trends.json
 python src/06_elite_profiles.py     # --> data/results/elite_profiles.json
-python src/07_figures.py            # --> paper/figures/fig{1..7}.{pdf,png}
+python src/07_figures.py            # --> paper/figures/fig{1..8}.{pdf,png}
 
 # 3. rebuild the paper
 cd paper
@@ -108,20 +143,22 @@ pdflatex paper && bibtex paper && pdflatex paper && pdflatex paper
 A fixed random seed of **42** is used throughout. Core dependencies pinned in
 `requirements.txt`:
 
-- `pandas`, `numpy`, `scipy`
-- `scikit-learn` (logistic, ridge, random forest, k-means, silhouette)
-- `umap-learn` (2-D embedding for Figure 4)
+- `pandas`, `numpy`, `scipy`, `statsmodels` (Chow / season FE / HC0)
+- `scikit-learn` (logistic, ridge, random forest, k-means, silhouette,
+  GroupKFold, permutation_importance)
+- `umap-learn` (2-D embedding for Figure 4d)
 - `matplotlib`, `seaborn`
 
 ## Citation
 
 ```bibtex
 @misc{xiong2026sgminepga,
-  title  = {What Separates Elite PGA Tour Players?
-            A Data-Mining Study of Strokes Gained, Player Archetypes,
-            and Finish Position in 333 Tournaments (2015--2022)},
+  title  = {Within-Tour Determinants of Finish Position on the PGA Tour,
+            2015--2022: Dominance Analysis of Strokes Gained, Honest
+            Archetype Clustering, and Leakage-Aware Predictive Models},
   author = {Xiong, Edward},
   year   = {2026},
+  note   = {Version 2 (peer-review revised)},
   url    = {https://github.com/edwardxiong2027/sgmine-pga}
 }
 ```
@@ -133,7 +170,9 @@ Raw data sourced from **Advanced Sports Analytics**
 **Kaggle** by Rob Mulla
 (<https://www.kaggle.com/datasets/robikscube/pga-tour-golf-data-20152022>).
 Strokes Gained framework originally formulated by Mark Broadie
-(*Interfaces* 2012, *Every Shot Counts* 2014).
+(*Interfaces* 2012, *Every Shot Counts* 2014). The v2 revision was shaped by
+an anonymous peer review whose eight major concerns are mapped to v2 changes
+in [`docs/CHANGELOG_V2.md`](docs/CHANGELOG_V2.md).
 
 ## License
 

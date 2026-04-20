@@ -1,13 +1,20 @@
 {
   "n_rows": 29180,
   "n_rows_made_cut": 17048,
-  "variance_decomp": {
-    "r2_full": 0.9859001196818066,
-    "unique_r2": {
+  "sg_total_identity": {
+    "note": "This is a decomposition of Var(SG_total) into the variances and covariances of its additive constituents OTT+APP+ARG+PUTT. It is a property of the SG metric's distribution, not a claim about the importance of the underlying skills. For an importance decomposition on finish position see `lmg_importance_on_finish` below.",
+    "r2_full_identity": 0.9859001196818066,
+    "unique_r2_in_identity": {
       "sg_ott": 0.16214568354298975,
       "sg_app": 0.31135012865864975,
       "sg_arg": 0.1325343376203879,
       "sg_putt": 0.3138690551770935
+    },
+    "marginal_var_share": {
+      "sg_ott": 0.1770313083351213,
+      "sg_app": 0.3398834307612386,
+      "sg_arg": 0.1433913201451449,
+      "sg_putt": 0.3396939407584951
     },
     "pearson_r_with_total": {
       "sg_ott": 0.4501846820876472,
@@ -20,6 +27,40 @@
       "sg_app": 0.9873974171567528,
       "sg_arg": 0.9857668338451542,
       "sg_putt": 0.9851618118023104
+    }
+  },
+  "lmg_importance_on_finish": {
+    "total_r2": 0.4930782389341978,
+    "lmg_r2": {
+      "sg_ott": 0.10046402833506922,
+      "sg_app": 0.16775010688812778,
+      "sg_arg": 0.06848067573735385,
+      "sg_putt": 0.1563834279736469
+    },
+    "lmg_share_of_total": {
+      "sg_ott": 0.20374865569453032,
+      "sg_app": 0.3402099172957303,
+      "sg_arg": 0.1388839951350859,
+      "sg_putt": 0.3171574318746534
+    },
+    "note": "Lindeman/Merenda/Gold dominance analysis: each predictor's share is the mean incremental R^2 over all 4! = 24 orderings. This is Shapley-value attribution for R^2 in a linear model.",
+    "lmg_share_95ci": {
+      "sg_ott": [
+        0.18867010490418695,
+        0.22008550682337757
+      ],
+      "sg_app": [
+        0.32765205983589046,
+        0.3527287066995433
+      ],
+      "sg_arg": [
+        0.119985610481512,
+        0.15174812861847214
+      ],
+      "sg_putt": [
+        0.3007739469978941,
+        0.3318665724198159
+      ]
     }
   },
   "rank_correlations": {
@@ -43,15 +84,16 @@
       "p_value": 0.0,
       "n": 16291
     },
-    "sg_t2g": {
-      "spearman_rho_minus_pos": 0.6825439927914607,
-      "p_value": 0.0,
-      "n": 16291
-    },
     "sg_total": {
       "spearman_rho_minus_pos": 0.9109769105029859,
       "p_value": 0.0,
       "n": 16291
+    },
+    "sg_t2g": {
+      "spearman_rho_minus_pos": 0.6825439927914607,
+      "p_value": 0.0,
+      "n": 16291,
+      "note": "sg_t2g = sg_ott + sg_app + sg_arg by definition; reported for convenience only \u2014 it is not independent information beyond its three additive constituents."
     }
   },
   "within_tournament_standardised": {
@@ -59,134 +101,158 @@
       "sg_ott": {
         "mean_beta_flipped": 0.4393456138566213,
         "median_beta_flipped": 0.4418896000193132,
-        "n_tournaments": 241
+        "beta_95ci_across_tournaments": [
+          0.22188012481198918,
+          0.6365898005364039
+        ],
+        "n_tournaments": 241,
+        "shot_count_proxy": 14,
+        "reliability": 0.9333333333333333,
+        "attenuation_corrected_beta": 0.454765915155869,
+        "mean_vif": 1.0779474640547975
       },
       "sg_app": {
         "mean_beta_flipped": 0.598758916066531,
         "median_beta_flipped": 0.6126570487752026,
-        "n_tournaments": 241
+        "beta_95ci_across_tournaments": [
+          0.22719206894057073,
+          0.8188598075746191
+        ],
+        "n_tournaments": 241,
+        "shot_count_proxy": 13,
+        "reliability": 0.9285714285714286,
+        "attenuation_corrected_beta": 0.6213614923306808,
+        "mean_vif": 1.1057295687892081
       },
       "sg_arg": {
         "mean_beta_flipped": 0.40600320408100793,
         "median_beta_flipped": 0.41565016884853456,
-        "n_tournaments": 241
+        "beta_95ci_across_tournaments": [
+          0.1633681274708361,
+          0.5865524251513663
+        ],
+        "n_tournaments": 241,
+        "shot_count_proxy": 5,
+        "reliability": 0.8333333333333334,
+        "attenuation_corrected_beta": 0.4447542265890831,
+        "mean_vif": 1.0744668543257179
       },
       "sg_putt": {
         "mean_beta_flipped": 0.6093938929215238,
         "median_beta_flipped": 0.6218814206948281,
-        "n_tournaments": 241
+        "beta_95ci_across_tournaments": [
+          0.24159917546993395,
+          0.8435566962713893
+        ],
+        "n_tournaments": 241,
+        "shot_count_proxy": 29,
+        "reliability": 0.9666666666666667,
+        "attenuation_corrected_beta": 0.61981163717924,
+        "mean_vif": 1.104470475442574
       }
     },
     "mean_R2_within_tournament": 0.8851619499467789,
-    "median_R2_within_tournament": 0.9416105332598804
+    "median_R2_within_tournament": 0.9416105332598804,
+    "n_tournaments_fit": 241,
+    "note": "beta* are standardised OLS coefficients averaged across tournaments. 95%% CIs are the 2.5/97.5 percentiles of the per-tournament distribution. Attenuation correction scales by 1/sqrt(reliability) where reliability = n_shots/(n_shots+1) using canonical per-round shot counts. VIFs > 5 would flag multicollinearity; we report mean VIF here."
   },
-  "top_vs_bottom": {
-    "bucket_means": {
-      "made_cut": {
-        "sg_ott": 0.1261232989206945,
-        "sg_app": 0.24458822149225715,
-        "sg_arg": 0.10482226654152979,
-        "sg_putt": 0.22084643359924916,
-        "sg_total": 0.7024659784138901
-      },
-      "missed_cut": {
-        "sg_ott": -0.2876195186284207,
-        "sg_app": -0.5884487306297396,
-        "sg_arg": -0.2452942631058358,
-        "sg_putt": -0.6013773491592482,
-        "sg_total": -1.722091163864161
-      },
-      "top10_finish": {
-        "sg_ott": 0.47003240907454086,
-        "sg_app": 0.8869211379186173,
-        "sg_arg": 0.3459920777817789,
-        "sg_putt": 0.8399603889088946,
-        "sg_total": 2.541469211379186
-      },
-      "top3_finish": {
-        "sg_ott": 0.5818181818181818,
-        "sg_app": 1.1456902356902359,
-        "sg_arg": 0.3978002244668911,
-        "sg_putt": 1.0453535353535355,
-        "sg_total": 3.1636700336700336
-      },
-      "win": {
-        "sg_ott": 0.6801239669421489,
-        "sg_app": 1.3021487603305786,
-        "sg_arg": 0.42132231404958675,
-        "sg_putt": 1.228801652892562,
-        "sg_total": 3.615371900826446
-      }
-    },
+  "top_vs_bottom_with_ci": {
     "top_vs_bottom_decile": {
       "sg_ott": {
-        "top10pct_mean": 0.5293687901811805,
-        "bot10pct_mean": -0.2730733410942957,
-        "cohens_d": 1.3591207497775601,
+        "cohens_d_top_vs_bot": 1.3591207497775601,
+        "cohens_d_95ci": [
+          1.2862040926750071,
+          1.427002814000274
+        ],
+        "fitzsimons_r_continuous": 0.30204640722932385,
+        "full_sample_pearson_r_with_neg_pos": 0.33762985099825776,
         "n_top": 1711,
         "n_bot": 1718
       },
       "sg_app": {
-        "top10pct_mean": 0.9850146113383986,
-        "bot10pct_mean": -0.45403958090803265,
-        "cohens_d": 1.8792190869829266,
+        "cohens_d_top_vs_bot": 1.8792190869829266,
+        "cohens_d_95ci": [
+          1.7965854579582599,
+          1.9554959881066076
+        ],
+        "fitzsimons_r_continuous": 0.3928788645920547,
+        "full_sample_pearson_r_with_neg_pos": 0.44796865485782855,
         "n_top": 1711,
         "n_bot": 1718
       },
       "sg_arg": {
-        "top10pct_mean": 0.3709000584453536,
-        "bot10pct_mean": -0.1860419091967404,
-        "cohens_d": 1.019912348753896,
+        "cohens_d_top_vs_bot": 1.019912348753896,
+        "cohens_d_95ci": [
+          0.9460763607777016,
+          1.0944159420644912
+        ],
+        "fitzsimons_r_continuous": 0.234067376859116,
+        "full_sample_pearson_r_with_neg_pos": 0.2734538307582644,
         "n_top": 1711,
         "n_bot": 1718
       },
       "sg_putt": {
-        "top10pct_mean": 0.9440502630040911,
-        "bot10pct_mean": -0.3614027939464493,
-        "cohens_d": 1.6425960104641948,
+        "cohens_d_top_vs_bot": 1.6425960104641948,
+        "cohens_d_95ci": [
+          1.5791844977385339,
+          1.7219858325442203
+        ],
+        "fitzsimons_r_continuous": 0.3536193126545914,
+        "full_sample_pearson_r_with_neg_pos": 0.4019850736273308,
         "n_top": 1711,
         "n_bot": 1718
       },
       "sg_total": {
-        "top10pct_mean": 2.827013442431327,
-        "bot10pct_mean": -1.2653783469150175,
-        "cohens_d": 4.891111764827736,
+        "cohens_d_top_vs_bot": 4.891111764827736,
+        "cohens_d_95ci": [
+          4.676688643524108,
+          5.115079496999449
+        ],
+        "fitzsimons_r_continuous": 0.6610772040540892,
+        "full_sample_pearson_r_with_neg_pos": 0.8075023718107431,
         "n_top": 1711,
         "n_bot": 1718
       }
     },
     "top10pct_rank_cutoff": 6.0,
-    "bot10pct_rank_cutoff": 64.0
+    "bot10pct_rank_cutoff": 64.0,
+    "note": "Cohen's d computed between top-decile (pos <= 6) and bottom-decile (pos >= 64) cut-makers. Extreme-groups designs inflate d by ~30-50%% relative to continuous correlations. The Fitzsimons (2008) / Hunter-Schmidt back-transform gives an estimate of the underlying continuous effect size, which is directly comparable to the full-sample Pearson r in the last column."
   },
-  "made_cut_analysis": {
-    "means_by_cut": {
-      "sg_ott": {
-        "0": -0.2876195186284207,
-        "1": 0.12612329892069452
-      },
-      "sg_app": {
-        "0": -0.5884487306297396,
-        "1": 0.24458822149225715
-      },
-      "sg_arg": {
-        "0": -0.2452942631058358,
-        "1": 0.1048222665415298
-      },
-      "sg_putt": {
-        "0": -0.6013773491592482,
-        "1": 0.22084643359924916
-      },
-      "sg_total": {
-        "0": -1.722091163864161,
-        "1": 0.7024659784138901
-      }
+  "bucket_means": {
+    "made_cut": {
+      "sg_ott": 0.1261232989206945,
+      "sg_app": 0.24458822149225715,
+      "sg_arg": 0.10482226654152979,
+      "sg_putt": 0.22084643359924916,
+      "sg_total": 0.7024659784138901
     },
-    "cut_minus_nocut": {
-      "sg_ott": 0.41374281754911524,
-      "sg_app": 0.8330369521219967,
-      "sg_arg": 0.3501165296473656,
-      "sg_putt": 0.8222237827584974,
-      "sg_total": 2.424557142278051
+    "missed_cut": {
+      "sg_ott": -0.2876195186284207,
+      "sg_app": -0.5884487306297396,
+      "sg_arg": -0.2452942631058358,
+      "sg_putt": -0.6013773491592482,
+      "sg_total": -1.722091163864161
+    },
+    "top10_finish": {
+      "sg_ott": 0.47003240907454086,
+      "sg_app": 0.8869211379186173,
+      "sg_arg": 0.3459920777817789,
+      "sg_putt": 0.8399603889088946,
+      "sg_total": 2.541469211379186
+    },
+    "top3_finish": {
+      "sg_ott": 0.5818181818181818,
+      "sg_app": 1.1456902356902359,
+      "sg_arg": 0.3978002244668911,
+      "sg_putt": 1.0453535353535355,
+      "sg_total": 3.1636700336700336
+    },
+    "win": {
+      "sg_ott": 0.6801239669421489,
+      "sg_app": 1.3021487603305786,
+      "sg_arg": 0.42132231404958675,
+      "sg_putt": 1.228801652892562,
+      "sg_total": 3.615371900826446
     }
   }
 }

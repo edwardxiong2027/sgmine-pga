@@ -1,105 +1,281 @@
 {
   "k_selected": 4,
-  "silhouette_by_k": {
-    "2": 0.2315233672457954,
-    "3": 0.20319201875842147,
-    "4": 0.2050790460906309,
-    "5": 0.20013087370262364,
-    "6": 0.17747413076914953,
-    "7": 0.17073024192064634,
-    "8": 0.18736273033187292
+  "silhouette_sweep_absolute": {
+    "observed": {
+      "2": 0.2315233672457954,
+      "3": 0.20319201875842147,
+      "4": 0.2050790460906309,
+      "5": 0.20013087370262364,
+      "6": 0.17747413076914953,
+      "7": 0.17073024192064634,
+      "8": 0.18736273033187292
+    },
+    "null_mean": {
+      "2": 0.22433101901028582,
+      "3": 0.21277599627433402,
+      "4": 0.19920630559736305,
+      "5": 0.19731177032002697,
+      "6": 0.1920720018616578,
+      "7": 0.1901824384463135,
+      "8": 0.18882126956875778
+    },
+    "null_95": {
+      "2": 0.24264757706744547,
+      "3": 0.2268149928674386,
+      "4": 0.21354920435785954,
+      "5": 0.2121778592292565,
+      "6": 0.20392699705292644,
+      "7": 0.2009214290975055,
+      "8": 0.2008515949923417
+    }
   },
-  "silhouette_selected": 0.2050790460906309,
+  "silhouette_sweep_residual": {
+    "observed": {
+      "2": 0.2841591345194418,
+      "3": 0.2556111046510575,
+      "4": 0.22773848929798807,
+      "5": 0.2155677787525217,
+      "6": 0.22608620182855801,
+      "7": 0.23131328421743216,
+      "8": 0.22245000382499874
+    },
+    "null_mean": {
+      "2": 0.28046552810372566,
+      "3": 0.2493722369152892,
+      "4": 0.23805925427608998,
+      "5": 0.24084558095271694,
+      "6": 0.23926973768501206,
+      "7": 0.2401491124856392,
+      "8": 0.2396306520981447
+    },
+    "null_95": {
+      "2": 0.2993641516890537,
+      "3": 0.2647399628954955,
+      "4": 0.2513277266437814,
+      "5": 0.25692697749099236,
+      "6": 0.25452916581543455,
+      "7": 0.25359783385244306,
+      "8": 0.2560202736445359
+    }
+  },
   "n_players": 375,
-  "clusters": [
+  "min_events_threshold": 10,
+  "clusters_absolute": [
     {
+      "scope": "absolute",
       "cluster_id": 0,
       "label": "Above-avg (strong OTT, weak PUTT)",
       "n_players": 100,
       "mean_sg_total": 0.2050485245646449,
-      "mean_made_cut_rate": 0.6774757472024945,
-      "mean_wins_per_player": 1.31,
-      "mean_top10s_per_player": 14.17,
-      "centroid_raw_sg": {
-        "sg_ott": 0.22889503537313793,
-        "sg_app": 0.21262788398473925,
-        "sg_arg": -0.0007339392394785926,
-        "sg_putt": -0.2405517657853818
-      },
-      "exemplars_top5_closest": [
-        "Harold Varner III",
-        "Kevin Streelman",
-        "Aaron Wise",
-        "Francesco Molinari",
-        "Ryan Moore"
-      ]
+      "wins_per_player": 1.31,
+      "top10s_per_player": 14.17,
+      "made_cut_rate": 0.6774757472024945,
+      "sg_ott": 0.22889503537313793,
+      "sg_app": 0.21262788398473925,
+      "sg_arg": -0.0007339392394785926,
+      "sg_putt": -0.2405517657853818,
+      "mean_per_player_stability": 0.8584
     },
     {
+      "scope": "absolute",
       "cluster_id": 1,
       "label": "Balanced (strong OTT, weak APP)",
       "n_players": 102,
       "mean_sg_total": -0.8957810155372997,
-      "mean_made_cut_rate": 0.46221440356158694,
-      "mean_wins_per_player": 0.28431372549019607,
-      "mean_top10s_per_player": 2.950980392156863,
-      "centroid_raw_sg": {
-        "sg_ott": -0.0028693878487278945,
-        "sg_app": -0.31414702492012975,
-        "sg_arg": -0.2997066650543625,
-        "sg_putt": -0.28589985102448023
-      },
-      "exemplars_top5_closest": [
-        "Michael Gligic",
-        "Andrew Landry",
-        "Jim Knous",
-        "Scott Brown",
-        "Sam Saunders"
-      ]
+      "wins_per_player": 0.28431372549019607,
+      "top10s_per_player": 2.950980392156863,
+      "made_cut_rate": 0.46221440356158694,
+      "sg_ott": -0.0028693878487278945,
+      "sg_app": -0.31414702492012975,
+      "sg_arg": -0.2997066650543625,
+      "sg_putt": -0.28589985102448023,
+      "mean_per_player_stability": 0.7291176470588235
     },
     {
+      "scope": "absolute",
       "cluster_id": 2,
       "label": "Balanced (strong ARG, weak OTT)",
       "n_players": 138,
       "mean_sg_total": -0.36003287799487504,
-      "mean_made_cut_rate": 0.5688425768738788,
-      "mean_wins_per_player": 0.5652173913043478,
-      "mean_top10s_per_player": 7.4855072463768115,
-      "centroid_raw_sg": {
-        "sg_ott": -0.2293883001075625,
-        "sg_app": -0.19649815643504537,
-        "sg_arg": 0.053554739773263846,
-        "sg_putt": 0.005814691000032207
-      },
-      "exemplars_top5_closest": [
-        "Peter Uihlein",
-        "Michael Thompson",
-        "Mark Hubbard",
-        "Nate Lashley",
-        "Zac Blair"
-      ]
+      "wins_per_player": 0.5652173913043478,
+      "top10s_per_player": 7.4855072463768115,
+      "made_cut_rate": 0.5688425768738788,
+      "sg_ott": -0.2293883001075625,
+      "sg_app": -0.19649815643504537,
+      "sg_arg": 0.053554739773263846,
+      "sg_putt": 0.005814691000032207,
+      "mean_per_player_stability": 0.7639130434782608
     },
     {
+      "scope": "absolute",
       "cluster_id": 3,
       "label": "Below-avg (strong ARG, weak APP)",
       "n_players": 35,
       "mean_sg_total": -2.000528820473189,
-      "mean_made_cut_rate": 0.28697334905027533,
-      "mean_wins_per_player": 0.11428571428571428,
-      "mean_top10s_per_player": 0.6285714285714286,
-      "centroid_raw_sg": {
-        "sg_ott": -0.6380380621567046,
-        "sg_app": -0.8668165884459711,
-        "sg_arg": -0.18522847236593187,
-        "sg_putt": -0.3142697058409384
-      },
-      "exemplars_top5_closest": [
-        "Shaun Micheel",
-        "Tim Herron",
-        "Bo Van Pelt",
-        "Nelson Ledesma",
-        "Daniel Chopra"
-      ]
+      "wins_per_player": 0.11428571428571428,
+      "top10s_per_player": 0.6285714285714286,
+      "made_cut_rate": 0.28697334905027533,
+      "sg_ott": -0.6380380621567046,
+      "sg_app": -0.8668165884459711,
+      "sg_arg": -0.18522847236593187,
+      "sg_putt": -0.3142697058409384,
+      "mean_per_player_stability": 0.549
     }
   ],
-  "min_events_threshold": 10
+  "clusters_residual": [
+    {
+      "scope": "residual",
+      "cluster_id": 0,
+      "label": "Above-avg (strong OTT, weak ARG)",
+      "n_players": 91,
+      "mean_sg_total": -0.3691301842893153,
+      "wins_per_player": 1.021978021978022,
+      "top10s_per_player": 9.153846153846153,
+      "made_cut_rate": 0.5757666161539152,
+      "sg_ott": 0.20618650118635526,
+      "sg_app": -0.05142003300314054,
+      "sg_arg": -0.16425187485097062,
+      "sg_putt": 0.009485406667756019,
+      "mean_per_player_stability": 0.7279670329670331
+    },
+    {
+      "scope": "residual",
+      "cluster_id": 1,
+      "label": "Above-avg (strong ARG, weak APP)",
+      "n_players": 90,
+      "mean_sg_total": -0.8828464271164458,
+      "wins_per_player": 0.2777777777777778,
+      "top10s_per_player": 4.066666666666666,
+      "made_cut_rate": 0.47288045934071626,
+      "sg_ott": 0.08013082820287715,
+      "sg_app": -0.37292975985061927,
+      "sg_arg": 0.16118823699731027,
+      "sg_putt": 0.13161069465043188,
+      "mean_per_player_stability": 0.6939444444444444
+    },
+    {
+      "scope": "residual",
+      "cluster_id": 2,
+      "label": "Above-avg (strong APP, weak PUTT)",
+      "n_players": 101,
+      "mean_sg_total": -0.2527503032194252,
+      "wins_per_player": 0.7326732673267327,
+      "top10s_per_player": 9.247524752475247,
+      "made_cut_rate": 0.5854932194101362,
+      "sg_ott": 0.16433806325622677,
+      "sg_app": 0.1861167440790591,
+      "sg_arg": -0.0021383294516879314,
+      "sg_putt": -0.3483164778835979,
+      "mean_per_player_stability": 0.8462871287128714
+    },
+    {
+      "scope": "residual",
+      "cluster_id": 3,
+      "label": "Above-avg (strong ARG, weak OTT)",
+      "n_players": 93,
+      "mean_sg_total": -0.5590650663680077,
+      "wins_per_player": 0.5376344086021505,
+      "top10s_per_player": 6.881720430107527,
+      "made_cut_rate": 0.5306340659977603,
+      "sg_ott": -0.27708713097059323,
+      "sg_app": -0.006414463664003077,
+      "sg_arg": 0.205525949689533,
+      "sg_putt": 0.07797564494506337,
+      "mean_per_player_stability": 0.7603763440860215
+    }
+  ],
+  "exemplars_absolute": {
+    "0": [
+      "Harold Varner III",
+      "Kevin Streelman",
+      "Aaron Wise",
+      "Francesco Molinari",
+      "Ryan Moore"
+    ],
+    "1": [
+      "Michael Gligic",
+      "Andrew Landry",
+      "Jim Knous",
+      "Scott Brown",
+      "Sam Saunders"
+    ],
+    "2": [
+      "Peter Uihlein",
+      "Michael Thompson",
+      "Mark Hubbard",
+      "Nate Lashley",
+      "Zac Blair"
+    ],
+    "3": [
+      "Shaun Micheel",
+      "Tim Herron",
+      "Bo Van Pelt",
+      "Nelson Ledesma",
+      "Daniel Chopra"
+    ]
+  },
+  "exemplars_residual": {
+    "0": [
+      "Jim Knous",
+      "Sepp Straka",
+      "Hao-Tong Li",
+      "Sam Saunders",
+      "Brooks Koepka"
+    ],
+    "1": [
+      "Brian Harman",
+      "Seamus Power",
+      "Jose de Jesus Rodriguez",
+      "Sang-Moon Bae",
+      "Harry Higgs"
+    ],
+    "2": [
+      "Francesco Molinari",
+      "Jason Dufner",
+      "Scott Piercy",
+      "Henrik Norlander",
+      "Thomas Pieters"
+    ],
+    "3": [
+      "K.J. Choi",
+      "Ryo Ishikawa",
+      "Cameron Smith",
+      "Erik Compton",
+      "Nate Lashley"
+    ]
+  },
+  "top20_concentration_abs": {
+    "counts_by_cluster_abs": {
+      "0": 18,
+      "2": 2
+    },
+    "max_share": 0.9,
+    "note": "Absolute-scope clustering includes the SG_total level dimension (the 4 components sum to SG_total up to rounding), so the cluster with the highest centroid on the sum will contain the top players by construction. This is a CIRCULARITY CHECK, not an independent finding."
+  },
+  "top20_concentration_res": {
+    "counts_by_cluster_res": {
+      "0": 9,
+      "2": 8,
+      "3": 2,
+      "1": 1
+    },
+    "max_share": 0.45,
+    "note": "Residual-scope clustering removes each player's mean SG level before clustering, so cluster assignments reflect SHAPE of the SG profile (which components dominate) rather than its OVERALL level. If the top-20 are still concentrated in one residual cluster, that is informative."
+  },
+  "stability_absolute": {
+    "k": 4,
+    "n_boot": 200,
+    "per_player_agreement_mean": 0.7595866666666666,
+    "per_player_agreement_median": 0.795,
+    "pct_players_above_0_70": 0.696,
+    "pct_players_above_0_50": 0.9013333333333333
+  },
+  "stability_residual": {
+    "k": 4,
+    "n_boot": 200,
+    "per_player_agreement_mean": 0.7597066666666666,
+    "per_player_agreement_median": 0.79,
+    "pct_players_above_0_70": 0.6426666666666667,
+    "pct_players_above_0_50": 0.9013333333333333
+  }
 }

@@ -1,144 +1,200 @@
 {
-  "per_season_field_spread": {
-    "2015": {
-      "mean_within_tourn_sg_std": 1.902150832932001,
-      "sd_within_tourn_sg_std": 0.32411298736807437,
-      "n_tournaments": 26
-    },
-    "2016": {
-      "mean_within_tourn_sg_std": 1.891628195477401,
-      "sd_within_tourn_sg_std": 0.27339479617800144,
-      "n_tournaments": 27
-    },
-    "2017": {
-      "mean_within_tourn_sg_std": 1.9506116316700686,
-      "sd_within_tourn_sg_std": 0.231322102822248,
-      "n_tournaments": 31
-    },
-    "2018": {
-      "mean_within_tourn_sg_std": 1.9014217604618684,
-      "sd_within_tourn_sg_std": 0.2592971617227412,
-      "n_tournaments": 34
-    },
-    "2019": {
-      "mean_within_tourn_sg_std": 1.9131957191597893,
-      "sd_within_tourn_sg_std": 0.3016978279094173,
-      "n_tournaments": 35
-    },
-    "2020": {
-      "mean_within_tourn_sg_std": 1.9340060040190932,
-      "sd_within_tourn_sg_std": 0.3136328882713304,
-      "n_tournaments": 29
-    },
-    "2021": {
-      "mean_within_tourn_sg_std": 1.911527845873897,
-      "sd_within_tourn_sg_std": 0.469914833939862,
-      "n_tournaments": 39
-    },
-    "2022": {
-      "mean_within_tourn_sg_std": 1.8405173579315117,
-      "sd_within_tourn_sg_std": 0.18920547732161447,
-      "n_tournaments": 26
-    }
-  },
-  "per_season_winner_sg": {
-    "2015": {
-      "sg_ott_mean": 0.7030769230769232,
+  "annual_table": [
+    {
+      "season": 2015,
+      "n_winners": 26,
+      "sg_ott_mean": 0.7031,
       "sg_ott_median": 0.71,
-      "sg_app_mean": 1.2488461538461537,
+      "sg_app_mean": 1.2488,
       "sg_app_median": 1.335,
-      "sg_arg_mean": 0.3426923076923077,
-      "sg_arg_median": 0.33499999999999996,
-      "sg_putt_mean": 1.389230769230769,
+      "sg_arg_mean": 0.3427,
+      "sg_arg_median": 0.335,
+      "sg_putt_mean": 1.3892,
       "sg_putt_median": 1.22,
-      "sg_total_mean": 3.686923076923077,
-      "sg_total_median": 3.565
+      "sg_total_mean": 3.6869,
+      "sg_total_median": 3.565,
+      "mean_within_t_sd": 1.9022,
+      "sd_within_t_sd": 0.3241,
+      "n_tournaments": 26,
+      "sg_coverage": 1.0,
+      "n_rows": 2699
     },
-    "2016": {
+    {
+      "season": 2016,
+      "n_winners": 26,
       "sg_ott_mean": 0.705,
       "sg_ott_median": 0.665,
-      "sg_app_mean": 1.3734615384615385,
+      "sg_app_mean": 1.3735,
       "sg_app_median": 1.18,
-      "sg_arg_mean": 0.38576923076923075,
+      "sg_arg_mean": 0.3858,
       "sg_arg_median": 0.355,
-      "sg_putt_mean": 0.9103846153846155,
+      "sg_putt_mean": 0.9104,
       "sg_putt_median": 0.96,
-      "sg_total_mean": 3.376153846153846,
-      "sg_total_median": 3.33
+      "sg_total_mean": 3.3762,
+      "sg_total_median": 3.33,
+      "mean_within_t_sd": 1.8916,
+      "sd_within_t_sd": 0.2734,
+      "n_tournaments": 27,
+      "sg_coverage": 1.0,
+      "n_rows": 2958
     },
-    "2017": {
-      "sg_ott_mean": 0.6725806451612903,
+    {
+      "season": 2017,
+      "n_winners": 31,
+      "sg_ott_mean": 0.6726,
       "sg_ott_median": 0.71,
-      "sg_app_mean": 1.3048387096774194,
+      "sg_app_mean": 1.3048,
       "sg_app_median": 1.28,
-      "sg_arg_mean": 0.5206451612903226,
+      "sg_arg_mean": 0.5206,
       "sg_arg_median": 0.29,
-      "sg_putt_mean": 1.1348387096774193,
+      "sg_putt_mean": 1.1348,
       "sg_putt_median": 0.94,
-      "sg_total_mean": 3.633870967741936,
-      "sg_total_median": 3.58
+      "sg_total_mean": 3.6339,
+      "sg_total_median": 3.58,
+      "mean_within_t_sd": 1.9506,
+      "sd_within_t_sd": 0.2313,
+      "n_tournaments": 31,
+      "sg_coverage": 1.0,
+      "n_rows": 3604
     },
-    "2018": {
-      "sg_ott_mean": 0.7420588235294118,
+    {
+      "season": 2018,
+      "n_winners": 34,
+      "sg_ott_mean": 0.7421,
       "sg_ott_median": 0.76,
-      "sg_app_mean": 1.3188235294117645,
+      "sg_app_mean": 1.3188,
       "sg_app_median": 1.385,
-      "sg_arg_mean": 0.41441176470588237,
+      "sg_arg_mean": 0.4144,
       "sg_arg_median": 0.36,
-      "sg_putt_mean": 1.2094117647058822,
-      "sg_putt_median": 1.0350000000000001,
-      "sg_total_mean": 3.6852941176470586,
-      "sg_total_median": 3.675
+      "sg_putt_mean": 1.2094,
+      "sg_putt_median": 1.035,
+      "sg_total_mean": 3.6853,
+      "sg_total_median": 3.675,
+      "mean_within_t_sd": 1.9014,
+      "sd_within_t_sd": 0.2593,
+      "n_tournaments": 34,
+      "sg_coverage": 1.0,
+      "n_rows": 3968
     },
-    "2019": {
-      "sg_ott_mean": 0.7822857142857143,
+    {
+      "season": 2019,
+      "n_winners": 35,
+      "sg_ott_mean": 0.7823,
       "sg_ott_median": 0.72,
-      "sg_app_mean": 1.3737142857142857,
+      "sg_app_mean": 1.3737,
       "sg_app_median": 1.35,
-      "sg_arg_mean": 0.33057142857142857,
+      "sg_arg_mean": 0.3306,
       "sg_arg_median": 0.37,
       "sg_putt_mean": 1.31,
       "sg_putt_median": 1.34,
-      "sg_total_mean": 3.7957142857142854,
-      "sg_total_median": 3.76
+      "sg_total_mean": 3.7957,
+      "sg_total_median": 3.76,
+      "mean_within_t_sd": 1.9132,
+      "sd_within_t_sd": 0.3017,
+      "n_tournaments": 35,
+      "sg_coverage": 1.0,
+      "n_rows": 4377
     },
-    "2020": {
-      "sg_ott_mean": 0.5682758620689655,
+    {
+      "season": 2020,
+      "n_winners": 29,
+      "sg_ott_mean": 0.5683,
       "sg_ott_median": 0.56,
-      "sg_app_mean": 1.256896551724138,
+      "sg_app_mean": 1.2569,
       "sg_app_median": 1.42,
-      "sg_arg_mean": 0.32034482758620686,
+      "sg_arg_mean": 0.3203,
       "sg_arg_median": 0.35,
-      "sg_putt_mean": 1.4248275862068966,
+      "sg_putt_mean": 1.4248,
       "sg_putt_median": 1.46,
-      "sg_total_mean": 3.5689655172413794,
-      "sg_total_median": 3.4
+      "sg_total_mean": 3.569,
+      "sg_total_median": 3.4,
+      "mean_within_t_sd": 1.934,
+      "sd_within_t_sd": 0.3136,
+      "n_tournaments": 29,
+      "sg_coverage": 1.0,
+      "n_rows": 3704
     },
-    "2021": {
-      "sg_ott_mean": 0.6244444444444445,
+    {
+      "season": 2021,
+      "n_winners": 36,
+      "sg_ott_mean": 0.6244,
       "sg_ott_median": 0.57,
-      "sg_app_mean": 1.2458333333333333,
+      "sg_app_mean": 1.2458,
       "sg_app_median": 1.255,
-      "sg_arg_mean": 0.5302777777777777,
+      "sg_arg_mean": 0.5303,
       "sg_arg_median": 0.565,
-      "sg_putt_mean": 1.1188888888888888,
+      "sg_putt_mean": 1.1189,
       "sg_putt_median": 0.99,
       "sg_total_mean": 3.5225,
-      "sg_total_median": 3.565
+      "sg_total_median": 3.565,
+      "mean_within_t_sd": 1.9115,
+      "sd_within_t_sd": 0.4699,
+      "n_tournaments": 39,
+      "sg_coverage": 1.0,
+      "n_rows": 4762
     },
-    "2022": {
-      "sg_ott_mean": 0.6224000000000001,
+    {
+      "season": 2022,
+      "n_winners": 25,
+      "sg_ott_mean": 0.6224,
       "sg_ott_median": 0.66,
-      "sg_app_mean": 1.2908000000000002,
+      "sg_app_mean": 1.2908,
       "sg_app_median": 1.31,
       "sg_arg_mean": 0.5136,
       "sg_arg_median": 0.6,
       "sg_putt_mean": 1.3532,
       "sg_putt_median": 1.29,
-      "sg_total_mean": 3.6068000000000002,
-      "sg_total_median": 3.58
+      "sg_total_mean": 3.6068,
+      "sg_total_median": 3.58,
+      "mean_within_t_sd": 1.8405,
+      "sd_within_t_sd": 0.1892,
+      "n_tournaments": 26,
+      "sg_coverage": 1.0,
+      "n_rows": 3108
     }
-  },
+  ],
+  "coverage_by_season": [
+    {
+      "season": 2015,
+      "sg_coverage": 1.0,
+      "n_rows": 2699
+    },
+    {
+      "season": 2016,
+      "sg_coverage": 1.0,
+      "n_rows": 2958
+    },
+    {
+      "season": 2017,
+      "sg_coverage": 1.0,
+      "n_rows": 3604
+    },
+    {
+      "season": 2018,
+      "sg_coverage": 1.0,
+      "n_rows": 3968
+    },
+    {
+      "season": 2019,
+      "sg_coverage": 1.0,
+      "n_rows": 4377
+    },
+    {
+      "season": 2020,
+      "sg_coverage": 1.0,
+      "n_rows": 3704
+    },
+    {
+      "season": 2021,
+      "sg_coverage": 1.0,
+      "n_rows": 4762
+    },
+    {
+      "season": 2022,
+      "sg_coverage": 1.0,
+      "n_rows": 3108
+    }
+  ],
   "per_season_component_vs_pos": {
     "2015": {
       "sg_ott": {
@@ -156,10 +212,6 @@
       "sg_putt": {
         "pearson_r_with_pos": -0.2660667447583819,
         "p": 1.4755367369541454e-27
-      },
-      "sg_t2g": {
-        "pearson_r_with_pos": -0.42764226984339326,
-        "p": 9.315321382793828e-73
       }
     },
     "2016": {
@@ -178,10 +230,6 @@
       "sg_putt": {
         "pearson_r_with_pos": -0.17734719469260646,
         "p": 8.503985406304239e-14
-      },
-      "sg_t2g": {
-        "pearson_r_with_pos": -0.34788049489664613,
-        "p": 8.228892356472468e-51
       }
     },
     "2017": {
@@ -200,10 +248,6 @@
       "sg_putt": {
         "pearson_r_with_pos": -0.33999904367451605,
         "p": 1.611543846478221e-58
-      },
-      "sg_t2g": {
-        "pearson_r_with_pos": -0.517404135947255,
-        "p": 1.6819113642624285e-145
       }
     },
     "2018": {
@@ -222,10 +266,6 @@
       "sg_putt": {
         "pearson_r_with_pos": -0.42386634100746357,
         "p": 2.4132501486029428e-101
-      },
-      "sg_t2g": {
-        "pearson_r_with_pos": -0.6899056772895403,
-        "p": 0.0
       }
     },
     "2019": {
@@ -244,10 +284,6 @@
       "sg_putt": {
         "pearson_r_with_pos": -0.45929285204405157,
         "p": 7.385055788052711e-126
-      },
-      "sg_t2g": {
-        "pearson_r_with_pos": -0.6617519617196996,
-        "p": 4.486296925765536e-303
       }
     },
     "2020": {
@@ -266,10 +302,6 @@
       "sg_putt": {
         "pearson_r_with_pos": -0.4653266176267007,
         "p": 1.5803688196873762e-106
-      },
-      "sg_t2g": {
-        "pearson_r_with_pos": -0.6765864696786384,
-        "p": 3.9395626940965183e-264
       }
     },
     "2021": {
@@ -288,10 +320,6 @@
       "sg_putt": {
         "pearson_r_with_pos": -0.4575563311558795,
         "p": 1.0754238863581967e-126
-      },
-      "sg_t2g": {
-        "pearson_r_with_pos": -0.6907808977496894,
-        "p": 0.0
       }
     },
     "2022": {
@@ -310,10 +338,6 @@
       "sg_putt": {
         "pearson_r_with_pos": -0.41425790212872965,
         "p": 9.730975845379763e-71
-      },
-      "sg_t2g": {
-        "pearson_r_with_pos": -0.6913032981682581,
-        "p": 2.3024919080243698e-239
       }
     }
   },
@@ -366,5 +390,210 @@
       "n_made": 1833,
       "n_missed": 1275
     }
-  }
+  },
+  "tests": {
+    "linear_trend_winner_sg_total": {
+      "slope_per_season": 0.0010306315158904403,
+      "intercept": 1.529198011602844,
+      "r": 0.020076885911165094,
+      "p": 0.9623659534661148,
+      "se": 0.020952888252686555,
+      "change_over_8_seasons": 0.007214420611233082
+    },
+    "linear_trend_within_tourn_sd": {
+      "slope_per_season": -0.004404511872332743,
+      "intercept": 10.796139632744346,
+      "r": -0.33213537385325215,
+      "p": 0.4215294343343457,
+      "se": 0.005106524602057379,
+      "change_over_8_seasons": -0.0308315831063292
+    },
+    "season_fixed_effects_within_t_sd": {
+      "coefs": {
+        "const": {
+          "est": 1.902150832932001,
+          "se": 0.06232942064770694,
+          "p": 1.5174779800214316e-204,
+          "ci95": [
+            1.779987413285248,
+            2.024314252578754
+          ]
+        },
+        "season_2016": {
+          "est": -0.01052263745459946,
+          "se": 0.08093669728699478,
+          "p": 0.8965579534988786,
+          "ci95": [
+            -0.16915564916472994,
+            0.148110374255531
+          ]
+        },
+        "season_2017": {
+          "est": 0.04846079873806873,
+          "se": 0.07453456569470153,
+          "p": 0.515576696526417,
+          "ci95": [
+            -0.09762426562688091,
+            0.19454586310301836
+          ]
+        },
+        "season_2018": {
+          "est": -0.0007290724701321245,
+          "se": 0.07618592671632532,
+          "p": 0.9923646424729926,
+          "ci95": [
+            -0.15005074496293766,
+            0.1485926000226734
+          ]
+        },
+        "season_2019": {
+          "est": 0.011044886227788424,
+          "se": 0.08007040590304175,
+          "p": 0.8902880894461687,
+          "ci95": [
+            -0.14589022556967673,
+            0.1679799980252536
+          ]
+        },
+        "season_2020": {
+          "est": 0.03185517108709286,
+          "se": 0.08461625657516696,
+          "p": 0.706570246508565,
+          "ci95": [
+            -0.1339896443068349,
+            0.19769998648102066
+          ]
+        },
+        "season_2021": {
+          "est": 0.00937701294189618,
+          "se": 0.09696301324704788,
+          "p": 0.9229589920759667,
+          "ci95": [
+            -0.1806670008547978,
+            0.1994210267385902
+          ]
+        },
+        "season_2022": {
+          "est": -0.061633475000489026,
+          "se": 0.07217252639451587,
+          "p": 0.39311928851746947,
+          "ci95": [
+            -0.20308902740700654,
+            0.07982207740602851
+          ]
+        }
+      },
+      "r2": 0.008645971551488052,
+      "base_season": 2015,
+      "joint_F_seasons_equal_zero": {
+        "F": 0.6685965267931018,
+        "p": 0.6985599387299908,
+        "df_num": 7,
+        "df_denom": 239
+      }
+    },
+    "season_fixed_effects_winner_sg": {
+      "coefs": {
+        "const": {
+          "est": 3.6869230769230708,
+          "se": 0.28272646011950175,
+          "p": 7.18877358930651e-39,
+          "ci95": [
+            3.1327893976123473,
+            4.241056756233794
+          ]
+        },
+        "season_2016": {
+          "est": -0.3107692307692387,
+          "se": 0.3265327290218254,
+          "p": 0.34123667024035953,
+          "ci95": [
+            -0.9507616194255933,
+            0.329223157887116
+          ]
+        },
+        "season_2017": {
+          "est": -0.05305210918114868,
+          "se": 0.29850259479899216,
+          "p": 0.8589370154338563,
+          "ci95": [
+            -0.6381064442789266,
+            0.5320022259166293
+          ]
+        },
+        "season_2018": {
+          "est": -0.001628959276025405,
+          "se": 0.3115957387654379,
+          "p": 0.9958288404665294,
+          "ci95": [
+            -0.6123453849924347,
+            0.609087466440384
+          ]
+        },
+        "season_2019": {
+          "est": 0.10879120879120244,
+          "se": 0.3091171298064127,
+          "p": 0.7248819837206844,
+          "ci95": [
+            -0.4970672326337593,
+            0.7146496502161641
+          ]
+        },
+        "season_2020": {
+          "est": -0.1179575596817021,
+          "se": 0.31530966276701566,
+          "p": 0.708329411788912,
+          "ci95": [
+            -0.7359531426825228,
+            0.5000380233191186
+          ]
+        },
+        "season_2021": {
+          "est": -0.16442307692308442,
+          "se": 0.31080672687018424,
+          "p": 0.5967913476356379,
+          "ci95": [
+            -0.773593067741423,
+            0.4447469138952541
+          ]
+        },
+        "season_2022": {
+          "est": -0.08012307692308333,
+          "se": 0.29783284179503716,
+          "p": 0.7879140703072631,
+          "ci95": [
+            -0.6638647202545719,
+            0.5036185664084053
+          ]
+        }
+      },
+      "r2": 0.01986905260340399,
+      "base_season": 2015,
+      "joint_F_seasons_equal_zero": {
+        "F": 0.749760261799038,
+        "p": 0.6300308227995473,
+        "df_num": 7,
+        "df_denom": 234
+      }
+    },
+    "chow_break_winner_sg_total": {
+      "F": 0.714199128024455,
+      "p": 0.5429709293002276,
+      "boundary": 2018,
+      "n_pre": 3,
+      "n_post": 5,
+      "rss_full": 0.11063392858465174,
+      "rss_split": 0.0815223374308408
+    },
+    "chow_break_within_t_sd": {
+      "F": 1.0677796808829492,
+      "p": 0.4250222422176233,
+      "boundary": 2018,
+      "n_pre": 3,
+      "n_post": 5,
+      "rss_full": 0.006571301564877168,
+      "rss_split": 0.004284076595087075
+    }
+  },
+  "note": "Formal tests for the v1 assertion that scoring dispersion and winner SG are stationary 2015-2022. Linear-trend tests use the 8 annual means; season-fixed-effects tests use the tournament-level panel (247 events) and HC0 robust SEs; the Chow test uses a 2018 break candidate motivated by the v1 narrative about pre-2018 coverage artefacts."
 }

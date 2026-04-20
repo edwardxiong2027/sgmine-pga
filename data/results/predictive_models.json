@@ -1,52 +1,117 @@
 {
-  "made_cut": {
-    "logistic": {
-      "cv_roc_auc": 0.8847326576968069,
-      "cv_accuracy": 0.7939684715558603,
-      "coefficients": {
-        "sg_ott": 0.8427813465206256,
-        "sg_app": 1.2104909332395306,
-        "sg_arg": 0.7787747022348668,
-        "sg_putt": 1.2946700071413357
-      },
-      "intercept": 0.4402815994070548
+  "cut_sanity_check_same_tournament_sg": {
+    "random_5fold": {
+      "logistic_auc": 0.8847326576968069,
+      "logistic_acc": 0.7939684715558603,
+      "rf_auc": 0.8934916981921409,
+      "rf_acc": 0.8171692940370117
     },
-    "random_forest": {
-      "cv_roc_auc": 0.8935619178332889,
-      "cv_accuracy": 0.8169636737491434,
-      "permutation_importance": {
-        "sg_ott": 0.0945512509586786,
-        "sg_app": 0.16435218868838825,
-        "sg_arg": 0.09422346775025783,
-        "sg_putt": 0.18653275228934088
-      }
+    "group_by_tournament": {
+      "logistic_auc": 0.8853796975200154,
+      "logistic_acc": 0.7943792344019731,
+      "rf_auc": 0.8935896228796534,
+      "rf_acc": 0.8163499721022166
     },
-    "baseline_accuracy_always_1": 0.5842357779300891
+    "group_by_player": {
+      "logistic_auc": 0.8847579726782373,
+      "logistic_acc": 0.7937971213159699,
+      "rf_auc": 0.893361603578466,
+      "rf_acc": 0.8159355723098013
+    },
+    "out_of_time_2021_2022": {
+      "logistic_auc": 0.8711606514247296,
+      "logistic_acc": 0.7753494282083863,
+      "rf_auc": 0.8846122287747646,
+      "rf_acc": 0.8049555273189326
+    },
+    "logistic_coefficients": {
+      "sg_ott": 0.8427813465206256,
+      "sg_app": 1.2104909332395306,
+      "sg_arg": 0.7787747022348668,
+      "sg_putt": 1.2946700071413357
+    },
+    "rf_permutation_importance": {
+      "sg_ott": 0.09390423809470753,
+      "sg_app": 0.1640462460254577,
+      "sg_arg": 0.0952660440367387,
+      "sg_putt": 0.18620365074461945
+    },
+    "baseline_prevalence": 0.5842357779300891,
+    "note": "SANITY CHECK: SG is computed over the same rounds that determine the cut line, so predicting `made_cut` from same-tournament SG is a near-arithmetic identity. High AUC here is not a predictive-modelling achievement but a check that SG attribution is correct. See `classify_made_cut_genuine` for a real predictive model using pre-tournament trailing SG."
+  },
+  "cut_genuine_trailing_sg": {
+    "random_5fold": {
+      "logistic_auc": 0.6359850074637116,
+      "logistic_acc": 0.6193390587044665,
+      "rf_auc": 0.6340117159693139,
+      "rf_acc": 0.6198066716621307
+    },
+    "group_by_tournament": {
+      "logistic_auc": 0.6347704537469145,
+      "logistic_acc": 0.6198141730660635,
+      "rf_auc": 0.631754462623068,
+      "rf_acc": 0.6188427958445021
+    },
+    "group_by_player": {
+      "logistic_auc": 0.6353474976338221,
+      "logistic_acc": 0.6193388969342605,
+      "rf_auc": 0.6310468024219207,
+      "rf_acc": 0.6187634738404635
+    },
+    "out_of_time_2021_2022": {
+      "logistic_auc": 0.643918558706323,
+      "logistic_acc": 0.609746639089969,
+      "rf_auc": 0.6339468916530258,
+      "rf_acc": 0.6026370217166495
+    },
+    "rf_permutation_importance": {
+      "prior_sg_ott": 0.1040714698035466,
+      "prior_sg_app": 0.07831045816755815,
+      "prior_sg_arg": 0.05496718445000034,
+      "prior_sg_putt": 0.05485214386224657,
+      "n_prior": 0.022400029211999645
+    },
+    "baseline_prevalence": 0.5880067628331954,
+    "trailing_window_N": 10,
+    "n_rows": 27799,
+    "note": "Genuine predictive model: features are the player's average SG over the immediately-preceding 10 events (no leakage). AUC here measures the signal in a player's RECENT form about making the upcoming cut. Expect AUC far below the 0.89 of the sanity check."
   },
   "finish_position": {
-    "ridge": {
-      "cv_r2": 0.5448712611747812,
-      "cv_mae_positions": 8.30447452906203,
-      "coefficients": {
-        "sg_ott": -8.694121125975366,
-        "sg_app": -11.338178115016138,
-        "sg_arg": -7.605608629060284,
-        "sg_putt": -11.606450782809157
-      }
+    "random_5fold": {
+      "ridge_r2": 0.5448712611747812,
+      "ridge_mae_pos": 8.30447452906203,
+      "rf_r2": 0.5208464878892555,
+      "rf_mae_pos": 7.338465154106937,
+      "ridge_spearman": 0.9076469865549821,
+      "rf_spearman": 0.891472211990545
     },
-    "random_forest": {
-      "cv_r2": 0.5206368548629153,
-      "cv_mae_positions": 7.332110536268151,
-      "permutation_importance": {
-        "sg_ott": 0.5421654343959419,
-        "sg_app": 0.6804842429107688,
-        "sg_arg": 0.40801457501452615,
-        "sg_putt": 0.6659195738610776
-      }
+    "group_by_tournament": {
+      "ridge_r2": 0.5417068801805437,
+      "ridge_mae_pos": 8.302647391275022,
+      "rf_r2": 0.5372865251081748,
+      "rf_mae_pos": 7.352401929695091
     },
-    "baseline_mean_pos": 34.393346019274446
-  },
-  "sg_total_sanity": {
-    "cv_r2_total_from_components": 0.9858781700250218
+    "group_by_player": {
+      "ridge_r2": 0.5867968237486065,
+      "ridge_mae_pos": 8.306806335106348,
+      "rf_r2": 0.5742053820717098,
+      "rf_mae_pos": 7.364900003699977
+    },
+    "out_of_time_2021_2022": {
+      "ridge_r2": 0.7750853317042603,
+      "ridge_mae_pos": 7.55790482997759,
+      "rf_r2": 0.7115797247021469,
+      "rf_mae_pos": 6.995875297180847
+    },
+    "rf_permutation_importance": {
+      "sg_ott": 0.5388584790742733,
+      "sg_app": 0.6807542716434126,
+      "sg_arg": 0.4011257359096087,
+      "sg_putt": 0.6322821778163442
+    },
+    "baseline_mean_pos": 34.393346019274446,
+    "n_cut_makers": 16291,
+    "field_size_typical": 70,
+    "note": "Finish position is an ordinal rank within a tournament. We report R^2, MAE in positions, and Spearman rank correlation on the random 5-fold. MAE 7.3 positions on a ~70-player cut field = ~10% of the field."
   }
 }
